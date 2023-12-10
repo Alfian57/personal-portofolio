@@ -1,0 +1,112 @@
+import { FaInstagram, FaGithub, FaWhatsapp, FaLinkedin } from "react-icons/fa6";
+import { FaArrowRight } from "react-icons/fa";
+import avatar from "../assets/avatar.png";
+import globe from "../assets/globe.png";
+import note from "../assets/note.png";
+import SkillCard from "../components/skill-card";
+import ReactTypingEffect from "react-typing-effect";
+
+const Biography = () => {
+  return (
+    <>
+      <div className="min-h-screen flex flex-col justify-between md:justify-evenly md:gap-48 pt-16 pb-48 items-center">
+        <div className="rounded-full border-4 aspect-square w-2/3 flex items-center justify-center p-3 bg-secondary md:hidden">
+          <img src={avatar} />
+        </div>
+        <div className="flex flex-col gap-12 w-full">
+          <div className="flex md:hidden gap-5 justify-center">
+            <FaLinkedin className="text-3xl" />
+            <FaInstagram className="text-3xl" />
+            <FaGithub className="text-3xl" />
+            <FaWhatsapp className="text-3xl" />
+          </div>
+          <div className="flex flex-col w-full gap-3">
+            <h1 className="text-center text-2xl md:text-6xl md:mb-6 font-bold">
+              Hi, I'am{" "}
+              <ReactTypingEffect
+                text={["Alfian Gading", "Fullstack Enthusiasm"]}
+                speed={100}
+                eraseDelay={3000}
+                eraseSpeed={100}
+                typingDelay={1000}
+              />
+            </h1>
+            <h2 className="text-center text-xl md:text-5xl font-medium">
+              A special human with some ability to love learning and working on teamwork
+            </h2>
+          </div>
+        </div>
+        <div className="hidden md:flex w-full md:justify-between items-center gap-40">
+          <div className="flex-1 flex gap-10 items-center justify-center">
+            <div className="rounded-full border-4 aspect-square w-2/3 flex items-center justify-center p-3 bg-secondary">
+              <img src={avatar} />
+            </div>
+            <div>
+              <h1 className="font-bold text-4xl text-center mb-8">Biography</h1>
+              <p className="text-justify text-lg">
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Corrupti, exercitationem! Dolorem voluptates
+                nesciunt asperiores neque, provident ab consequuntur expedita excepturi nam quia maxime similique, voluptatum
+                vero quis quae dolore? Sequi.
+              </p>
+            </div>
+          </div>
+          <div className="flex flex-col justify-center items-center gap-8">
+            <h5 className="font-bold text-3xl">Lets Connect</h5>
+            <div className="flex gap-5 justify-center">
+              <FaLinkedin className="text-5xl" />
+              <FaInstagram className="text-5xl" />
+              <FaGithub className="text-5xl" />
+              <FaWhatsapp className="text-5xl" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="min-h-[75vh] flex flex-col justify-between items-center md:hidden">
+        <div>
+          <h1 className="font-bold text-xl text-center mb-8">Biography</h1>
+          <p className="text-justify">
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Corrupti, exercitationem! Dolorem voluptates nesciunt
+            asperiores neque, provident ab consequuntur expedita excepturi nam quia maxime similique, voluptatum vero quis
+            quae dolore? Sequi.
+          </p>
+        </div>
+        <div>
+          <h1 className="font-bold text-xl text-center mb-8">What I Do</h1>
+          <p className="text-justify">
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Corrupti, exercitationem! Dolorem voluptates nesciunt
+            asperiores neque, provident ab consequuntur expedita excepturi nam quia maxime similique, voluptatum vero quis
+            quae dolore? Sequi.
+          </p>
+        </div>
+      </div>
+
+      <div className="flex items-center gap-12 mb-24">
+        <div className="hidden md:block flex-1">
+          <h1 className="font-bold text-xl md:text-4xl text-center mb-8">What I Do</h1>
+          <p className="text-justify md:text-lg">
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo soluta consequatur ipsa. Consequatur maiores rerum
+            excepturi voluptatum, perspiciatis alias voluptates laborum possimus illo nobis perferendis cupiditate commodi
+            porro eligendi quisquam adipisci hic incidunt corrupti, molestias praesentium ad nisi repellendus. Iure nemo cum
+            itaque molestias saepe facere reprehenderit qui ea quo.
+          </p>
+        </div>
+        <div className="flex md:flex-1 gap-4 my-12 md:items-center">
+          <SkillCard
+            title="Web Developer"
+            body="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Enim voluptas quia dolorem adipisci quod minus?"
+            icon={globe}
+          />
+          <SkillCard
+            title="Database Admin"
+            body="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Odit, ipsum."
+            icon={note}
+          />
+          <FaArrowRight className="text-5xl hidden md:block" />
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default Biography;
