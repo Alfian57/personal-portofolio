@@ -1,0 +1,17 @@
+<svg width="320" height="360" viewBox="0 0 320 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M160 20L268 68V164C268 248 226 306 160 340C94 306 52 248 52 164V68L160 20Z" fill="url(#shield)"/>
+  <path d="M160 38L252 78V162C252 234 218 286 160 318C102 286 68 234 68 162V78L160 38Z" stroke="#F2D391" stroke-width="6"/>
+  <path d="M160 76L182 132H238L192 166L210 224L160 190L110 224L128 166L82 132H138L160 76Z" fill="rgba(216,179,95,0.16)" stroke="#D8B35F" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M160 88L170 188H150L160 88Z" fill="#F6E8C9"/>
+  <path d="M160 188L176 262H144L160 188Z" fill="#D8B35F"/>
+  <path d="M128 116C108 130 96 148 96 170C96 216 120 246 160 270" stroke="#7AD8DE" stroke-width="5" stroke-linecap="round"/>
+  <path d="M192 116C212 130 224 148 224 170C224 216 200 246 160 270" stroke="#7AD8DE" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="160" cy="160" r="94" stroke="rgba(122,216,222,0.2)" stroke-width="2"/>
+  <circle cx="160" cy="160" r="118" stroke="rgba(216,179,95,0.14)" stroke-width="2"/>
+  <defs>
+    <linearGradient id="shield" x1="160" y1="20" x2="160" y2="340" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#191726"/>
+      <stop offset="1" stop-color="#0B0A11"/>
+    </linearGradient>
+  </defs>
+</svg>

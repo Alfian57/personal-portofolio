@@ -1,0 +1,36 @@
+<svg width="420" height="320" viewBox="0 0 420 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <ellipse cx="210" cy="266" rx="112" ry="22" fill="rgba(0,0,0,0.22)"/>
+  <path d="M84 118L156 86L210 102L264 86L336 118L264 150L210 136L156 150L84 118Z" fill="url(#coverTop)" stroke="#D8B35F" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M156 150L210 136L210 242L156 258L156 150Z" fill="url(#leftPage)" stroke="rgba(245,232,209,0.24)" stroke-width="2"/>
+  <path d="M210 136L264 150L264 258L210 242L210 136Z" fill="url(#rightPage)" stroke="rgba(245,232,209,0.24)" stroke-width="2"/>
+  <path d="M84 118V214L156 258V150L84 118Z" fill="url(#coverSide)" stroke="#7AD8DE" stroke-opacity="0.18" stroke-width="2"/>
+  <path d="M336 118V214L264 258V150L336 118Z" fill="url(#coverSide)" stroke="#7AD8DE" stroke-opacity="0.18" stroke-width="2"/>
+  <path d="M156 150L116 130V226L156 258" stroke="rgba(245,232,209,0.18)" stroke-width="3"/>
+  <path d="M264 150L304 130V226L264 258" stroke="rgba(245,232,209,0.18)" stroke-width="3"/>
+  <path d="M180 170H198M174 190H198M174 210H194" stroke="#8A7660" stroke-width="4" stroke-linecap="round"/>
+  <path d="M222 170H244M222 190H248M226 210H248" stroke="#8A7660" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="210" cy="188" r="20" stroke="#7AD8DE" stroke-opacity="0.42" stroke-width="2.8"/>
+  <path d="M210 172L214 184L226 188L214 192L210 204L206 192L194 188L206 184L210 172Z" fill="#F5E8D1"/>
+  <path d="M210 42L222 78L258 90L222 102L210 138L198 102L162 90L198 78L210 42Z" fill="rgba(245,232,209,0.16)" stroke="#F5E8D1" stroke-width="3" stroke-linejoin="round"/>
+  <circle cx="210" cy="92" r="74" stroke="rgba(122,216,222,0.22)" stroke-width="3"/>
+  <circle cx="210" cy="92" r="104" stroke="rgba(216,179,95,0.18)" stroke-width="2.5"/>
+  <path d="M136 48C156 34 182 26 210 26C238 26 264 34 284 48" stroke="rgba(216,179,95,0.22)" stroke-width="3" stroke-linecap="round"/>
+  <defs>
+    <linearGradient id="coverTop" x1="210" y1="86" x2="210" y2="150" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2F413C"/>
+      <stop offset="1" stop-color="#17211F"/>
+    </linearGradient>
+    <linearGradient id="leftPage" x1="183" y1="136" x2="183" y2="258" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F5E8D1"/>
+      <stop offset="1" stop-color="#C7B59A"/>
+    </linearGradient>
+    <linearGradient id="rightPage" x1="237" y1="136" x2="237" y2="258" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F5E8D1"/>
+      <stop offset="1" stop-color="#C7B59A"/>
+    </linearGradient>
+    <linearGradient id="coverSide" x1="210" y1="118" x2="210" y2="258" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#22302C"/>
+      <stop offset="1" stop-color="#121917"/>
+    </linearGradient>
+  </defs>
+</svg>

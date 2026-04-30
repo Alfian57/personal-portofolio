@@ -1,0 +1,13 @@
+<svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="90" cy="90" r="78" fill="#131019" stroke="#D8B35F" stroke-width="4"/>
+  <circle cx="90" cy="90" r="58" stroke="rgba(122,216,222,0.22)" stroke-width="3"/>
+  <path d="M56 56H104C118 56 130 68 130 82V122H82C68 122 56 110 56 96V56Z" fill="url(#codex)" stroke="#F5E8D1" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M82 122V82C82 68 94 56 108 56" stroke="#D8B35F" stroke-width="3"/>
+  <path d="M72 78H100M72 92H110M72 106H102" stroke="#7AD8DE" stroke-width="3.5" stroke-linecap="round"/>
+  <defs>
+    <linearGradient id="codex" x1="93" y1="56" x2="93" y2="122" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2E3A2A"/>
+      <stop offset="1" stop-color="#182018"/>
+    </linearGradient>
+  </defs>
+</svg>

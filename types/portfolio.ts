@@ -47,6 +47,11 @@ export interface Project {
   image: string;
   technologies: string[];
   tags: string[];
+  role?: string;
+  context?: string;
+  highlights?: string[];
+  outcome?: string;
+  status?: "Professional" | "Research" | "Competition" | "Private/Internal";
   images?: string[];
   link?: string;
   github?: string;

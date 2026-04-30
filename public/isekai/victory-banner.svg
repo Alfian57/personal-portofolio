@@ -1,0 +1,14 @@
+<svg width="420" height="360" viewBox="0 0 420 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <ellipse cx="210" cy="318" rx="114" ry="24" fill="rgba(0,0,0,0.18)"/>
+  <path d="M210 36L230 86L284 104L230 122L210 172L190 122L136 104L190 86L210 36Z" fill="rgba(245,232,209,0.16)" stroke="#F5E8D1" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M210 146V300" stroke="#D8B35F" stroke-width="6" stroke-linecap="round"/>
+  <path d="M210 172L308 152V246L210 266V172Z" fill="url(#banner)" stroke="#D8B35F" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M230 188L248 214L280 218L258 238L264 270L236 254L208 270L214 238L192 218L224 214L230 188Z" fill="rgba(245,232,209,0.2)" stroke="#F5E8D1" stroke-width="3" stroke-linejoin="round"/>
+  <circle cx="210" cy="172" r="84" stroke="rgba(122,216,222,0.18)" stroke-width="3"/>
+  <defs>
+    <linearGradient id="banner" x1="259" y1="152" x2="259" y2="266" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#3A2B34"/>
+      <stop offset="1" stop-color="#1E161B"/>
+    </linearGradient>
+  </defs>
+</svg>

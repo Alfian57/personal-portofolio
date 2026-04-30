@@ -1,0 +1,14 @@
+<svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="90" cy="90" r="78" fill="#151018" stroke="#D8B35F" stroke-width="4"/>
+  <circle cx="90" cy="90" r="58" stroke="rgba(122,216,222,0.22)" stroke-width="3"/>
+  <path d="M48 72C56 72 62 66 62 58H118C118 66 124 72 132 72V108C124 108 118 114 118 122H62C62 114 56 108 48 108V72Z" fill="url(#ticket)" stroke="#F5E8D1" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M90 68V126" stroke="#D8B35F" stroke-width="3" stroke-dasharray="8 8"/>
+  <circle cx="74" cy="90" r="10" fill="#7AD8DE" fill-opacity="0.2" stroke="#7AD8DE" stroke-width="3"/>
+  <circle cx="106" cy="90" r="10" fill="#D8B35F" fill-opacity="0.18" stroke="#D8B35F" stroke-width="3"/>
+  <defs>
+    <linearGradient id="ticket" x1="90" y1="58" x2="90" y2="122" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#342A22"/>
+      <stop offset="1" stop-color="#1B1612"/>
+    </linearGradient>
+  </defs>
+</svg>

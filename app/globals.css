@@ -1,58 +1,553 @@
 @import "tailwindcss";
 
 :root {
-  --background: #0a0a0a;
-  --foreground: #ededed;
+  color-scheme: dark;
+  --bg: #0b0c10;
+  --bg-soft: #111318;
+  --bg-elevated: rgba(21, 24, 31, 0.92);
+  --panel: rgba(18, 21, 28, 0.88);
+  --panel-strong: rgba(12, 14, 19, 0.96);
+  --parchment: rgba(232, 211, 164, 0.07);
+  --parchment-strong: rgba(232, 211, 164, 0.12);
+  --border: rgba(232, 211, 164, 0.18);
+  --border-soft: rgba(93, 178, 189, 0.18);
+  --foreground: #f7f4ec;
+  --muted: #b7bdc7;
+  --muted-strong: #d6dbe4;
+  --gold: #d4a94f;
+  --gold-bright: #f0d08b;
+  --mana: #6fd5df;
+  --ember: #e07857;
+  --ink: #08090d;
+  --shadow-lg: 0 28px 72px rgba(0, 0, 0, 0.4);
+  --shadow-card: 0 18px 46px rgba(0, 0, 0, 0.28);
+  --radius-lg: 16px;
+  --radius-md: 12px;
+  --radius-sm: 8px;
+  --section-py: 4.5rem;
+  --section-px: 1rem;
+  --body-bg:
+    linear-gradient(180deg, rgba(232, 211, 164, 0.04), transparent 18rem),
+    linear-gradient(135deg, #0d0f13 0%, #08090d 48%, #0f1116 100%);
+  --body-grid-line: rgba(255, 255, 255, 0.025);
+  --body-texture-opacity: 0.28;
+  --body-after-bg: linear-gradient(180deg, transparent 0%, rgba(8, 9, 13, 0.42) 100%);
+  --surface-bg: linear-gradient(180deg, rgba(23, 26, 34, 0.96), rgba(12, 14, 19, 0.96));
+  --parchment-bg: linear-gradient(180deg, rgba(32, 29, 24, 0.94), rgba(16, 16, 16, 0.94));
+  --surface-inner-border: rgba(255, 255, 255, 0.04);
+  --navbar-bg: rgba(10, 12, 16, 0.58);
+  --navbar-bg-scrolled: rgba(10, 12, 16, 0.86);
+  --navbar-border: rgba(255, 255, 255, 0.08);
+  --glass-bg: rgba(255, 255, 255, 0.04);
+  --glass-bg-strong: rgba(255, 255, 255, 0.07);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-border-strong: rgba(232, 211, 164, 0.34);
+  --badge-bg: rgba(8, 9, 13, 0.74);
+  --modal-overlay: rgba(4, 5, 8, 0.78);
+  --hero-backdrop: linear-gradient(
+    180deg,
+    rgba(15, 17, 22, 0.72) 0%,
+    rgba(11, 12, 16, 0.96) 78%,
+    rgba(11, 12, 16, 1) 100%
+  );
+  --hero-backdrop-opacity: 0.8;
+  --world-veil-opacity: 0.08;
+  --world-grid-line: rgba(255, 255, 255, 0.03);
+  --timeline-line: linear-gradient(
+    180deg,
+    rgba(232, 211, 164, 0.72),
+    rgba(111, 213, 223, 0.34),
+    transparent
+  );
+  --image-well: rgba(10, 12, 16, 0.82);
+  --carousel-bg: rgba(10, 12, 16, 0.95);
+  --selection-bg: rgba(212, 169, 79, 0.35);
+  --selection-text: #fff7e7;
+  --scrollbar-track: rgba(255, 255, 255, 0.03);
+  --scrollbar-thumb: rgba(232, 211, 164, 0.38);
+  --section-english: rgba(111, 213, 223, 0.84);
+  --ornament-line: linear-gradient(90deg, transparent, rgba(232, 211, 164, 0.52), transparent);
+  --chip-border: rgba(232, 211, 164, 0.18);
+  --chip-bg: rgba(255, 255, 255, 0.045);
+  --button-primary-border: rgba(232, 211, 164, 0.45);
+  --button-primary-bg: rgba(212, 169, 79, 0.16);
+  --button-primary-text: #fff8e8;
+  --button-primary-border-hover: rgba(232, 211, 164, 0.74);
+  --button-primary-bg-hover: rgba(212, 169, 79, 0.24);
+  --button-primary-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 14px 28px rgba(0, 0, 0, 0.25);
+  --button-secondary-border: rgba(111, 213, 223, 0.24);
+  --button-secondary-bg: rgba(111, 213, 223, 0.08);
+  --button-secondary-text: #e5fbfd;
+  --button-secondary-border-hover: rgba(111, 213, 223, 0.48);
+  --button-secondary-bg-hover: rgba(111, 213, 223, 0.13);
+  --card-hover-border: rgba(232, 211, 164, 0.36);
+  --card-hover-shadow: 0 24px 50px rgba(0, 0, 0, 0.34);
+  --rune-glow: 0 0 16px rgba(212, 169, 79, 0.38);
+  --hero-moon-ring: rgba(232, 211, 164, 0.16);
+  --hero-moon-glow: rgba(212, 169, 79, 0.18);
+  --panel-veil: linear-gradient(180deg, rgba(111, 213, 223, 0.1), rgba(8, 9, 13, 0.35));
+  --media-overlay: linear-gradient(180deg, transparent, rgba(6, 6, 10, 0.58));
+  --media-overlay-strong: linear-gradient(180deg, transparent, rgba(8, 7, 13, 0.82));
+  --media-caption-bg: rgba(10, 12, 16, 0.72);
+  --floating-control-bg: rgba(10, 12, 16, 0.76);
+  --floating-control-border: rgba(255, 255, 255, 0.14);
+  --image-border: rgba(255, 255, 255, 0.1);
+  --empty-visual-bg: linear-gradient(180deg, rgba(122, 216, 222, 0.14), rgba(9, 8, 15, 0.94));
+  --dot-inactive: rgba(255, 255, 255, 0.18);
+  --filter-active-border: rgba(232, 211, 164, 0.34);
+  --filter-active-bg: rgba(232, 211, 164, 0.12);
+  --filter-idle-border: rgba(255, 255, 255, 0.08);
+  --filter-idle-bg: rgba(255, 255, 255, 0.04);
+  --filter-hover-border: rgba(111, 213, 223, 0.24);
+  --status-mana-border: rgba(122, 216, 222, 0.22);
+  --status-mana-bg: rgba(122, 216, 222, 0.1);
+  --status-gold-border: rgba(232, 211, 164, 0.22);
+  --status-gold-bg: rgba(232, 211, 164, 0.1);
+  --status-ember-border: rgba(197, 107, 83, 0.22);
+  --status-ember-bg: rgba(197, 107, 83, 0.1);
+  --callout-border: rgba(255, 255, 255, 0.08);
+  --callout-bg: rgba(255, 255, 255, 0.04);
+  --footer-border: rgba(232, 211, 164, 0.18);
+  --footer-bg: rgba(10, 12, 16, 0.78);
+  --cursor-ring: rgba(240, 208, 139, 0.72);
+  --cursor-ring-bg: rgba(111, 213, 223, 0.08);
+  --cursor-dot: #f0d08b;
+  --cursor-glow: rgba(111, 213, 223, 0.28);
+}
+
+* {
+  box-sizing: border-box;
 }
 
 html {
-  background: var(--background);
+  background: var(--bg);
   color: var(--foreground);
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
 }
 
 body {
-  background: var(--background);
+  min-height: 100vh;
+  overflow-x: clip;
+  background: var(--body-bg);
   color: var(--foreground);
-  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  font-family: var(--font-body), sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  position: relative;
 }
 
-/* Smooth scrolling */
-html {
-  scroll-behavior: smooth;
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--body-grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--body-grid-line) 1px, transparent 1px),
+    url("/isekai/parchment-texture.svg");
+  background-size:
+    72px 72px,
+    72px 72px,
+    360px;
+  opacity: var(--body-texture-opacity);
+  pointer-events: none;
 }
 
-/* Custom scrollbar */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: var(--body-after-bg);
+  pointer-events: none;
+}
+
+::selection {
+  background: var(--selection-bg);
+  color: var(--selection-text);
+}
+
+a,
+button {
+  cursor: pointer;
+}
+
+@media (pointer: fine) {
+  html.custom-cursor-enabled,
+  html.custom-cursor-enabled * {
+    cursor: none !important;
+  }
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--mana);
+  outline-offset: 3px;
+}
+
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 9px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #1a1a1a;
+  background: var(--scrollbar-track);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 5px;
+  background: var(--scrollbar-thumb);
+  border-radius: 999px;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #555;
+.site-shell {
+  position: relative;
+  overflow: clip;
 }
 
-/* Text gradient animation */
-@keyframes gradient {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
+.world-backdrop {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.world-backdrop__veil {
+  position: absolute;
+  inset: 0;
+  background:
+    url("/isekai/world-map.svg") left -10rem top 7rem / min(38rem, 82vw) no-repeat,
+    url("/isekai/rune-seal.svg") right -7rem top 18rem / min(28rem, 70vw) no-repeat;
+  opacity: var(--world-veil-opacity);
+}
+
+.world-backdrop__grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--world-grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--world-grid-line) 1px, transparent 1px);
+  background-size: 96px 96px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.5), transparent 72%);
+}
+
+.section-padding {
+  position: relative;
+  z-index: 1;
+  padding: var(--section-py) var(--section-px);
+}
+
+.section-frame,
+.arcane-surface,
+.parchment-surface {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  background: var(--surface-bg), url("/isekai/parchment-texture.svg");
+  background-size: cover;
+  box-shadow: var(--shadow-card);
+}
+
+.section-frame::before,
+.arcane-surface::before,
+.parchment-surface::before {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  border-radius: inherit;
+  border: 1px solid var(--surface-inner-border);
+  pointer-events: none;
+}
+
+.parchment-surface {
+  border-color: var(--border);
+  background: var(--parchment-bg), url("/isekai/parchment-texture.svg");
+}
+
+.hero-visual-backdrop {
+  background: var(--hero-backdrop), url("/isekai/guild-hall-backdrop.svg");
+  background-position: center;
+  background-size: cover;
+  opacity: var(--hero-backdrop-opacity);
+}
+
+.section-kicker {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold-bright);
+}
+
+.section-title {
+  font-family: var(--font-display), sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: 0;
+  color: var(--foreground);
+}
+
+.section-english {
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--section-english);
+}
+
+.display-font {
+  font-family: var(--font-display), sans-serif;
+  letter-spacing: 0;
+}
+
+.ornament-line {
+  height: 1px;
+  width: 100%;
+  background: var(--ornament-line);
+}
+
+.arcane-chip {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--chip-border);
+  background: var(--chip-bg);
+  color: var(--muted-strong);
+  border-radius: 999px;
+  padding: 0.42rem 0.68rem;
+  font-size: 0.78rem;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.arcane-button,
+.ghost-button {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  border-radius: 999px;
+  padding: 0.72rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0;
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    border-color 180ms ease,
+    background-color 180ms ease,
+    color 180ms ease;
+}
+
+.arcane-button {
+  border: 1px solid var(--button-primary-border);
+  background: var(--button-primary-bg);
+  color: var(--button-primary-text);
+  box-shadow: var(--button-primary-shadow);
+}
+
+.ghost-button {
+  border: 1px solid var(--button-secondary-border);
+  background: var(--button-secondary-bg);
+  color: var(--button-secondary-text);
+}
+
+.arcane-button:hover,
+.ghost-button:hover,
+.card-hover:hover {
+  transform: translateY(-2px);
+}
+
+.arcane-button:hover {
+  border-color: var(--button-primary-border-hover);
+  background: var(--button-primary-bg-hover);
+}
+
+.ghost-button:hover {
+  border-color: var(--button-secondary-border-hover);
+  background: var(--button-secondary-bg-hover);
+}
+
+.card-hover {
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    background-color 180ms ease;
+}
+
+.card-hover:hover {
+  border-color: var(--card-hover-border);
+  box-shadow: var(--card-hover-shadow);
+}
+
+.rune-dot {
+  height: 0.48rem;
+  width: 0.48rem;
+  border-radius: 999px;
+  background: var(--gold-bright);
+  box-shadow: var(--rune-glow);
+}
+
+.hide-scrollbar {
+  scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.custom-cursor-ring,
+.custom-cursor-dot {
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2147483647;
+  border-radius: 999px;
+  will-change: top, left, transform, opacity;
+}
+
+.custom-cursor-ring {
+  width: 1.75rem;
+  height: 1.75rem;
+  margin-top: -0.875rem;
+  margin-left: -0.875rem;
+  border: 1px solid var(--cursor-ring);
+  background: var(--cursor-ring-bg);
+  box-shadow: 0 0 22px var(--cursor-glow);
+  backdrop-filter: blur(2px);
+}
+
+.custom-cursor-dot {
+  width: 0.38rem;
+  height: 0.38rem;
+  margin-top: -0.19rem;
+  margin-left: -0.19rem;
+  background: var(--cursor-dot);
+  box-shadow: 0 0 14px var(--cursor-glow);
+}
+
+.hero-moon {
+  box-shadow:
+    0 0 0 1px var(--hero-moon-ring),
+    0 0 36px var(--hero-moon-glow);
+}
+
+.isekai-seal {
+  background-image: url("/isekai/rune-seal.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+.isekai-board {
+  background-image: url("/isekai/quest-board.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.isekai-map {
+  background-image: url("/isekai/world-map.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.isekai-portal {
+  background-image: url("/isekai/portal-gate.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+.isekai-relic {
+  background-image: url("/isekai/relic-blades.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+.isekai-panel-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--panel-veil);
+  pointer-events: none;
+}
+
+.ambient-float,
+.ambient-pulse {
+  animation: none;
+}
+
+@media (min-width: 640px) {
+  :root {
+    --section-px: 1.25rem;
   }
 }
 
-.animate-gradient {
-  background-size: 200% 200%;
-  animation: gradient 3s ease infinite;
+@media (min-width: 768px) {
+  :root {
+    --section-py: 5.75rem;
+    --section-px: 2rem;
+  }
+
+  .section-title {
+    font-size: 2.55rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  :root {
+    --section-py: 6.5rem;
+  }
+
+  .section-title {
+    font-size: 3rem;
+  }
+}
+
+@media (max-width: 360px) {
+  :root {
+    --section-px: 0.85rem;
+  }
+
+  .arcane-button,
+  .ghost-button {
+    width: 100%;
+    padding-inline: 0.75rem;
+    font-size: 0.84rem;
+  }
+
+  .arcane-chip {
+    max-width: 100%;
+    white-space: normal;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .custom-cursor-ring,
+  .custom-cursor-dot {
+    display: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

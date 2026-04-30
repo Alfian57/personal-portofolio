@@ -1,0 +1,21 @@
+<svg width="360" height="420" viewBox="0 0 360 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <ellipse cx="180" cy="386" rx="110" ry="22" fill="rgba(0,0,0,0.18)"/>
+  <path d="M110 384H250L236 226H124L110 384Z" fill="url(#base)" stroke="#D8B35F" stroke-width="3"/>
+  <path d="M124 226L180 152L236 226H124Z" fill="#1D2631"/>
+  <path d="M148 226V138H212V226" fill="url(#tower)" stroke="#F5E8D1" stroke-width="3"/>
+  <path d="M162 138L180 84L198 138H162Z" fill="#D8B35F"/>
+  <path d="M172 52L180 24L188 52" stroke="#7AD8DE" stroke-width="3.5" stroke-linecap="round"/>
+  <path d="M150 176H210M144 254H216M138 300H222" stroke="rgba(245,232,209,0.2)" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="180" cy="182" r="18" fill="rgba(122,216,222,0.18)" stroke="#7AD8DE" stroke-width="3"/>
+  <circle cx="180" cy="182" r="7" fill="#F5E8D1"/>
+  <defs>
+    <linearGradient id="base" x1="180" y1="226" x2="180" y2="384" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1A212C"/>
+      <stop offset="1" stop-color="#0D1118"/>
+    </linearGradient>
+    <linearGradient id="tower" x1="180" y1="138" x2="180" y2="226" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#314555"/>
+      <stop offset="1" stop-color="#1D2733"/>
+    </linearGradient>
+  </defs>
+</svg>

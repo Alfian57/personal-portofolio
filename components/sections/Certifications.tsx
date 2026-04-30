@@ -1,255 +1,289 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
-import { Award, ExternalLink, Calendar, ChevronRight } from "lucide-react";
-import { useState, useMemo } from "react";
-import { PORTFOLIO_DATA } from "@/constants/portfolio-data";
-import { fadeInUp, staggerContainer } from "@/lib/animations";
-import { Modal } from "@/components/ui/Modal";
-import { Certification } from "@/types/portfolio";
+import { useMemo, useState } from "react";
 import Image from "next/image";
+import { AnimatePresence, motion } from "framer-motion";
+import { Award, CalendarRange, ExternalLink } from "lucide-react";
+import { ARCANE_LORE } from "@/constants/lore-content";
+import { PORTFOLIO_DATA } from "@/constants/portfolio-data";
+import { Modal } from "@/components/ui/Modal";
+import { SectionHeading } from "@/components/ui/SectionHeading";
+import { fadeInUp, staggerContainer } from "@/lib/animations";
+import { Certification } from "@/types/portfolio";
 
 export function Certifications() {
   const [selectedCertification, setSelectedCertification] = useState<Certification | null>(null);
-  const [selectedIssuer, setSelectedIssuer] = useState<string>("All");
+  const [selectedIssuer, setSelectedIssuer] = useState<string>(
+    ARCANE_LORE.certifications.allFilter
+  );
   const [showAll, setShowAll] = useState(false);
 
-  // Get all unique issuers
-  const allIssuers = useMemo(() => {
-    const issuers = new Set<string>();
-    PORTFOLIO_DATA.certifications.forEach((cert) => {
-      issuers.add(cert.issuer);
+  const issuers = useMemo(() => {
+    const allIssuers = new Set<string>();
+    PORTFOLIO_DATA.certifications.forEach((certification) => {
+      allIssuers.add(certification.issuer);
     });
-    return ["All", ...Array.from(issuers).sort()];
+
+    return [ARCANE_LORE.certifications.allFilter, ...Array.from(allIssuers).sort()];
   }, []);
 
-  // Filter certifications by selected issuer
   const filteredCertifications = useMemo(() => {
-    if (selectedIssuer === "All") {
+    if (selectedIssuer === ARCANE_LORE.certifications.allFilter) {
       return PORTFOLIO_DATA.certifications;
     }
+
     return PORTFOLIO_DATA.certifications.filter(
-      (cert) => cert.issuer === selectedIssuer
+      (certification) => certification.issuer === selectedIssuer
     );
   }, [selectedIssuer]);
 
-  // Show only first 6 or all
   const displayedCertifications = showAll
     ? filteredCertifications
     : filteredCertifications.slice(0, 6);
+  const credentialLink = selectedCertification?.credentialUrl?.startsWith("http")
+    ? selectedCertification.credentialUrl
+    : undefined;
 
   return (
-    <section id="certifications" className="bg-gray-900/50 px-4 py-20">
-      <div className="mx-auto max-w-6xl">
+    <section id="certifications" className="section-padding">
+      <div className="mx-auto max-w-7xl">
         <motion.div
           initial="initial"
           whileInView="animate"
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, margin: "-80px" }}
           variants={staggerContainer}
         >
-          <motion.div variants={fadeInUp} className="mb-12 flex items-center gap-3">
-            <Award className="h-8 w-8 text-blue-500" />
-            <h2 className="text-4xl font-bold md:text-5xl">Certifications</h2>
-          </motion.div>
+          <SectionHeading section="certifications" />
 
-          {/* Filter Tabs */}
-          <motion.div variants={fadeInUp} className="mb-8">
-            <div className="flex flex-wrap gap-2">
-              {allIssuers.map((issuer) => (
+          <motion.div
+            variants={fadeInUp}
+            className="hide-scrollbar mb-8 flex gap-2 overflow-x-auto pb-2"
+          >
+            {issuers.map((issuer) => {
+              const isActive = selectedIssuer === issuer;
+
+              return (
                 <button
                   key={issuer}
+                  type="button"
                   onClick={() => {
-                    setSelectedIssuer(issuer);
                     setShowAll(false);
+                    setSelectedIssuer(issuer);
                   }}
-                  className={`rounded-lg px-4 py-2 font-medium transition-all ${
-                    selectedIssuer === issuer
-                      ? "bg-blue-500 text-white shadow-lg shadow-blue-500/50"
-                      : "bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-white"
+                  aria-pressed={isActive}
+                  className={`shrink-0 rounded-full border px-4 py-2 text-sm transition-all ${
+                    isActive
+                      ? "border-[var(--filter-active-border)] bg-[var(--filter-active-bg)] text-[var(--foreground)]"
+                      : "border-[var(--filter-idle-border)] bg-[var(--filter-idle-bg)] text-[var(--muted)] hover:border-[var(--filter-hover-border)] hover:text-[var(--foreground)]"
                   }`}
                 >
                   {issuer}
                 </button>
-              ))}
-            </div>
+              );
+            })}
           </motion.div>
 
           <AnimatePresence mode="wait">
             <motion.div
               key={selectedIssuer}
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
-              className="grid gap-6 md:grid-cols-2 lg:grid-cols-3"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.24 }}
+              className="grid gap-5 md:grid-cols-2 xl:grid-cols-3"
             >
-              {displayedCertifications.map((cert, index) => (
-                <motion.div
-                  key={cert.id}
-                  initial={{ opacity: 0, y: 20 }}
+              {displayedCertifications.map((certification, index) => (
+                <motion.button
+                  key={certification.id}
+                  type="button"
+                  onClick={() => setSelectedCertification(certification)}
+                  initial={{ opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, delay: index * 0.05 }}
-                  whileHover={{ y: -5 }}
-                onClick={() => setSelectedCertification(cert)}
-                className="group cursor-pointer rounded-2xl bg-gray-800 p-6 shadow-lg transition-all hover:shadow-xl"
-              >
-                {/* Certificate Image/Icon */}
-                {cert.image ? (
-                  <div className="relative mb-4 h-40 w-full overflow-hidden rounded-lg bg-gray-700">
-                    <Image
-                      src={cert.image}
-                      alt={cert.title}
-                      fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      className="object-cover transition-transform duration-300 group-hover:scale-105"
-                    />
+                  transition={{ duration: 0.28, delay: index * 0.04 }}
+                  className="section-frame card-hover overflow-hidden p-0 text-left"
+                >
+                  <div className="relative h-48 overflow-hidden bg-[var(--image-well)]">
+                    {certification.image ? (
+                      <Image
+                        src={certification.image}
+                        alt={certification.title}
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+                        className="object-contain p-3"
+                      />
+                    ) : (
+                      <div className="flex h-full items-center justify-center [background:var(--empty-visual-bg)]">
+                        <Award className="h-12 w-12 text-[var(--gold-bright)]" />
+                      </div>
+                    )}
+                    <div className="absolute inset-0 [background:var(--media-overlay-strong)]" />
+                    <div className="absolute right-4 bottom-4 left-4">
+                      <p className="text-xs font-bold tracking-[0.16em] text-[var(--mana)] uppercase">
+                        Sertifikasi 0{index + 1}
+                      </p>
+                    </div>
                   </div>
-                ) : (
-                  <div className="mb-4 flex h-40 w-full items-center justify-center rounded-lg bg-linear-to-br from-blue-500 to-purple-600">
-                    <Award className="h-16 w-16 text-white" />
-                  </div>
-                )}
 
-                <div className="mb-2 flex items-start justify-between">
-                  <h3 className="flex-1 text-lg font-bold text-white transition-colors group-hover:text-blue-500">
-                    {cert.title}
-                  </h3>
-                  <ChevronRight className="ml-2 h-5 w-5 shrink-0 text-gray-400 transition-all group-hover:translate-x-1 group-hover:text-blue-500" />
-                </div>
+                  <div className="p-5 sm:p-6">
+                    <h3 className="display-font text-2xl text-[var(--foreground)]">
+                      {certification.title}
+                    </h3>
+                    <p className="mt-2 text-base text-[var(--gold-bright)]">
+                      {certification.issuer}
+                    </p>
+                    <div className="mt-3 flex items-center gap-2 text-sm text-[var(--muted)]">
+                      <CalendarRange className="h-4 w-4 text-[var(--mana)]" />
+                      <span>{certification.date}</span>
+                    </div>
 
-                <p className="mb-2 font-semibold text-blue-400">{cert.issuer}</p>
-
-                <div className="mb-3 flex items-center gap-2 text-sm text-gray-400">
-                  <Calendar className="h-4 w-4" />
-                  <span>{cert.date}</span>
-                  {cert.expiryDate && <span className="text-xs">• Expires: {cert.expiryDate}</span>}
-                </div>
-
-                <p className="mb-3 line-clamp-2 text-sm text-gray-400">{cert.description}</p>
-
-                {cert.skills && (
-                  <div className="flex flex-wrap gap-1">
-                    {cert.skills.slice(0, 2).map((skill) => (
-                      <span
-                        key={skill}
-                        className="rounded bg-gray-700 px-2 py-1 text-xs text-gray-300"
-                      >
-                        {skill}
-                      </span>
-                    ))}
-                    {cert.skills.length > 2 && (
-                      <span className="px-2 py-1 text-xs text-gray-500">
-                        +{cert.skills.length - 2} more
-                      </span>
+                    {certification.skills && (
+                      <div className="mt-5 flex flex-wrap gap-2">
+                        {certification.skills.slice(0, 3).map((skill) => (
+                          <span key={skill} className="arcane-chip">
+                            {skill}
+                          </span>
+                        ))}
+                      </div>
                     )}
                   </div>
-                )}
-              </motion.div>
-            ))}
+                </motion.button>
+              ))}
             </motion.div>
           </AnimatePresence>
 
-          {/* See More/Less Button */}
+          {displayedCertifications.length === 0 && (
+            <motion.div variants={fadeInUp} className="section-frame p-6 text-center md:p-8">
+              <p className="section-kicker">Belum ada sertifikasi</p>
+              <h3 className="display-font mt-3 text-2xl font-bold text-[var(--foreground)]">
+                Tidak ada sertifikasi dari{" "}
+                <span className="text-[var(--gold-bright)]">{selectedIssuer}</span>.
+              </h3>
+              <p className="mx-auto mt-3 max-w-xl text-sm leading-7 text-[var(--muted)]">
+                Pilih penerbit lain atau kembali ke semua penerbit untuk melihat daftar sertifikasi
+                yang tersedia.
+              </p>
+              <button
+                type="button"
+                onClick={() => {
+                  setShowAll(false);
+                  setSelectedIssuer(ARCANE_LORE.certifications.allFilter);
+                }}
+                className="ghost-button mt-5"
+              >
+                Tampilkan Semua
+              </button>
+            </motion.div>
+          )}
+
           {filteredCertifications.length > 6 && (
             <motion.div variants={fadeInUp} className="mt-8 text-center">
               <button
-                onClick={() => setShowAll(!showAll)}
-                className="rounded-lg bg-blue-500 px-8 py-3 font-semibold text-white transition-all hover:bg-blue-600 hover:shadow-lg hover:shadow-blue-500/50"
+                type="button"
+                onClick={() => setShowAll((value) => !value)}
+                className="ghost-button"
               >
                 {showAll
-                  ? "Show Less"
-                  : `See More (${filteredCertifications.length - 6} more)`}
+                  ? "Tampilkan Lebih Ringkas"
+                  : `Tampilkan Sertifikasi Lainnya (${filteredCertifications.length - 6})`}
               </button>
             </motion.div>
           )}
         </motion.div>
       </div>
 
-      {/* Certification Detail Modal */}
       <Modal isOpen={!!selectedCertification} onClose={() => setSelectedCertification(null)}>
         {selectedCertification && (
-          <div className="p-8">
-            {/* Certificate Image */}
+          <div className="p-6 md:p-8">
             {selectedCertification.image && (
-              <div className="relative mb-6 h-64 w-full overflow-hidden rounded-xl bg-gray-700">
+              <div className="relative mb-7 h-64 overflow-hidden rounded-2xl border border-[var(--image-border)] bg-[var(--image-well)]">
                 <Image
                   src={selectedCertification.image}
                   alt={selectedCertification.title}
                   fill
                   sizes="(max-width: 1024px) 100vw, 896px"
-                  className="object-cover"
+                  className="object-contain p-4"
                 />
               </div>
             )}
 
-            {/* Header */}
-            <div className="mb-6 flex items-start gap-4">
-              <div className="rounded-xl bg-blue-500 p-4">
-                <Award className="h-8 w-8 text-white" />
+            <div className="flex items-start gap-4">
+              <div className="rounded-xl border border-[var(--status-gold-border)] bg-[var(--status-gold-bg)] p-3">
+                <Award className="h-6 w-6 text-[var(--gold-bright)]" />
               </div>
               <div className="flex-1">
-                <h2 className="mb-2 text-3xl font-bold text-white">
+                <p className="section-kicker">{ARCANE_LORE.certifications.modalTitle}</p>
+                <h2 className="display-font mt-3 text-4xl text-[var(--foreground)]">
                   {selectedCertification.title}
                 </h2>
-                <p className="mb-2 text-xl font-semibold text-blue-400">
+                <p className="mt-2 text-lg text-[var(--gold-bright)]">
                   {selectedCertification.issuer}
                 </p>
-                <div className="flex flex-wrap items-center gap-4 text-gray-400">
-                  <div className="flex items-center gap-2">
-                    <Calendar className="h-4 w-4" />
-                    <span>Issued: {selectedCertification.date}</span>
-                  </div>
+                <div className="mt-4 flex flex-wrap gap-4 text-sm text-[var(--muted)]">
+                  <span className="inline-flex items-center gap-2">
+                    <CalendarRange className="h-4 w-4 text-[var(--mana)]" />
+                    Diterbitkan: {selectedCertification.date}
+                  </span>
                   {selectedCertification.expiryDate && (
-                    <span>• Expires: {selectedCertification.expiryDate}</span>
+                    <span>Kedaluwarsa: {selectedCertification.expiryDate}</span>
                   )}
                 </div>
               </div>
             </div>
 
-            {/* Description */}
-            <div className="mb-6">
-              <p className="leading-relaxed text-gray-300">{selectedCertification.description}</p>
-            </div>
+            <div className="ornament-line my-7" />
 
-            {/* Credential Info */}
-            {selectedCertification.credentialId && (
-              <div className="mb-6 rounded-lg bg-gray-700/50 p-4">
-                <p className="mb-1 text-sm text-gray-400">Credential ID</p>
-                <p className="font-mono text-white">{selectedCertification.credentialId}</p>
+            <div className="grid gap-7 lg:grid-cols-[1fr_0.8fr]">
+              <div className="space-y-5">
+                <p className="text-sm leading-8 text-[var(--muted)]">
+                  {selectedCertification.description}
+                </p>
+
+                {selectedCertification.credentialId && (
+                  <div className="parchment-surface p-5">
+                    <p className="section-kicker">ID Kredensial</p>
+                    <p className="mt-3 font-mono text-sm break-all text-[var(--foreground)]">
+                      {selectedCertification.credentialId}
+                    </p>
+                  </div>
+                )}
+
+                {!credentialLink && selectedCertification.credentialUrl && (
+                  <div className="parchment-surface p-5">
+                    <p className="section-kicker">Kode Kredensial</p>
+                    <p className="mt-3 font-mono text-sm break-all text-[var(--foreground)]">
+                      {selectedCertification.credentialUrl}
+                    </p>
+                  </div>
+                )}
               </div>
-            )}
 
-            {/* Skills */}
-            {selectedCertification.skills && selectedCertification.skills.length > 0 && (
-              <div className="mb-6">
-                <h3 className="mb-3 text-lg font-semibold text-white">Skills Covered</h3>
-                <div className="flex flex-wrap gap-2">
-                  {selectedCertification.skills.map((skill) => (
-                    <span
-                      key={skill}
-                      className="rounded-full bg-blue-900/30 px-3 py-1 text-sm font-medium text-blue-400"
-                    >
-                      {skill}
-                    </span>
-                  ))}
+              {selectedCertification.skills && selectedCertification.skills.length > 0 && (
+                <div className="section-frame p-5">
+                  <p className="section-kicker">Skill Terkait</p>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {selectedCertification.skills.map((skill) => (
+                      <span key={skill} className="arcane-chip">
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            )}
-
-            {/* Action Buttons */}
-            <div className="flex gap-3">
-              {selectedCertification.credentialUrl && (
-                <a
-                  href={selectedCertification.credentialUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-lg bg-blue-500 px-6 py-3 font-semibold text-white transition-colors hover:bg-blue-600"
-                >
-                  View Credential
-                  <ExternalLink className="h-4 w-4" />
-                </a>
               )}
             </div>
+
+            {credentialLink && (
+              <div className="mt-8">
+                <a
+                  href={credentialLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="arcane-button"
+                >
+                  <ExternalLink className="h-4 w-4" />
+                  {ARCANE_LORE.certifications.credentialCta}
+                </a>
+              </div>
+            )}
           </div>
         )}
       </Modal>

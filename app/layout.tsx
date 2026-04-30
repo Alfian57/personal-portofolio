@@ -1,20 +1,23 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Archivo, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const archivo = Archivo({
+  variable: "--font-display",
   subsets: ["latin"],
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-body",
   subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Alfian Gading | Portfolio",
-  description: "Creative Fullstack Developer Portfolio",
+  title: "Alfian Gading Saputra | Fullstack Developer",
+  description:
+    "Portofolio profesional Alfian Gading Saputra, Fullstack Developer yang berfokus pada backend systems, API design, database, dan responsive web interface.",
 };
 
 export default function RootLayout({
@@ -23,8 +26,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} dark antialiased`}>
+    <html lang="id" suppressHydrationWarning>
+      <body className={`${archivo.variable} ${spaceGrotesk.variable} min-h-screen antialiased`}>
         {children}
       </body>
     </html>
