@@ -1,16 +1,21 @@
 # Build stage
+FROM oven/bun:1.3.1-alpine AS bun
+
 FROM node:22-alpine AS builder
 
 WORKDIR /app
 
+COPY --from=bun /usr/local/bin/bun /usr/local/bin/bun
+
 # Install dependencies based on the preferred package manager
 COPY package.json bun.lock* package-lock.json* yarn.lock* pnpm-lock.yaml* ./
+COPY scripts ./scripts
 
 RUN \
   if [ -f yarn.lock ]; then yarn install --frozen-lockfile; \
   elif [ -f package-lock.json ]; then npm ci; \
   elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm install --frozen-lockfile; \
-  elif [ -f bun.lock ]; then npm install; \
+  elif [ -f bun.lock ]; then bun install --frozen-lockfile; \
   else npm install; \
   fi
 
@@ -19,7 +24,13 @@ COPY . .
 
 # Build the application
 ENV NEXT_TELEMETRY_DISABLED=1
-RUN npm run build
+RUN \
+  if [ -f yarn.lock ]; then yarn build; \
+  elif [ -f package-lock.json ]; then npm run build; \
+  elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm build; \
+  elif [ -f bun.lock ]; then bun run build; \
+  else npm run build; \
+  fi
 
 # Production stage
 FROM node:22-alpine AS runner
