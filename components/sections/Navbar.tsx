@@ -4,8 +4,9 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
-import { ARCANE_NAV } from "@/constants/lore-content";
+import { NAV_ITEMS } from "@/constants/section-content";
 import { PORTFOLIO_DATA } from "@/constants/portfolio-data";
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { fadeInDown } from "@/lib/animations";
 
 export function Navbar() {
@@ -20,7 +21,7 @@ export function Navbar() {
       setScrolled(window.scrollY > 24);
 
       const activationLine = Math.min(220, Math.max(112, window.innerHeight * 0.32));
-      const sections = ARCANE_NAV.flatMap((item) => {
+      const sections = NAV_ITEMS.flatMap((item) => {
         const element = document.getElementById(item.section);
 
         return element ? [{ id: item.section, element }] : [];
@@ -73,15 +74,15 @@ export function Navbar() {
           initial="initial"
           animate="animate"
           variants={fadeInDown}
-          className={`mx-auto flex max-w-7xl items-center justify-between gap-3 rounded-2xl border px-3 py-2 transition-all duration-300 md:px-4 xl:grid xl:grid-cols-[minmax(12rem,16rem)_1fr_auto] xl:items-center ${
+          className={`mx-auto flex max-w-7xl items-center justify-between gap-3 rounded-[2rem] border px-3 py-2 transition-all duration-300 md:px-4 lg:grid lg:grid-cols-[minmax(12rem,16rem)_1fr_auto] lg:items-center ${
             scrolled
-              ? "border-[var(--navbar-border)] bg-[var(--navbar-bg-scrolled)] shadow-[var(--shadow-card)] backdrop-blur-xl"
-              : "border-[var(--navbar-border)] bg-[var(--navbar-bg)] backdrop-blur-md"
+              ? "clay-card bg-[var(--surface)]/88 backdrop-blur-xl dark:bg-[var(--surface)]/88"
+              : "border-[var(--border)] bg-[var(--surface)]/68 shadow-[var(--clay-shadow-small)] backdrop-blur-md dark:bg-[var(--surface)]/68"
           }`}
         >
           <Link
             href="#top"
-            className="display-font min-w-0 shrink-0 truncate rounded-xl px-2 py-2 text-sm font-bold text-[var(--foreground)] sm:text-base"
+            className="display-font min-w-0 shrink-0 truncate rounded-full px-3 py-2 text-sm font-extrabold text-[var(--foreground)] sm:text-base dark:text-[var(--foreground)]"
             onClick={() => {
               setActiveSection("");
               setMobileOpen(false);
@@ -90,8 +91,8 @@ export function Navbar() {
             {PORTFOLIO_DATA.hero.name}
           </Link>
 
-          <div className="hidden items-center justify-center gap-1 xl:flex">
-            {ARCANE_NAV.map((item) => {
+          <div className="hidden items-center justify-center gap-1 lg:flex">
+            {NAV_ITEMS.map((item) => {
               const isActive = activeSection === item.section;
 
               return (
@@ -100,23 +101,24 @@ export function Navbar() {
                   href={item.href}
                   onClick={() => setActiveSection(item.section)}
                   aria-current={isActive ? "page" : undefined}
-                  className={`rounded-full border px-3 py-2 text-sm font-semibold transition-colors duration-200 ${
+                  className={`rounded-full border px-3 py-2 text-sm font-bold transition-all duration-200 ${
                     isActive
-                      ? "border-[var(--glass-border-strong)] bg-[var(--parchment-strong)] text-[var(--foreground)]"
-                      : "border-transparent text-[var(--muted)] hover:border-[var(--border-soft)] hover:bg-[var(--glass-bg)] hover:text-[var(--foreground)]"
+                      ? "nav-pill-active"
+                      : "border-transparent text-[var(--muted)] hover:border-[var(--border)] hover:bg-[var(--surface-raised)] hover:text-[var(--foreground)] dark:hover:bg-[var(--surface-raised)]"
                   }`}
                 >
-                  {item.lore}
+                  {item.label}
                 </Link>
               );
             })}
           </div>
 
-          <div className="flex shrink-0 items-center gap-2 xl:justify-self-end">
+          <div className="flex shrink-0 items-center gap-2 lg:justify-self-end">
+            <ThemeToggle />
             <button
               type="button"
               onClick={() => setMobileOpen((open) => !open)}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-[var(--glass-border)] bg-[var(--glass-bg)] text-[var(--foreground)] xl:hidden"
+              className="clay-icon h-11 w-11 text-[var(--foreground)] lg:!hidden dark:text-[var(--foreground)]"
               aria-label="Buka navigasi"
               aria-expanded={mobileOpen}
             >
@@ -132,13 +134,13 @@ export function Navbar() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-40 bg-[var(--modal-overlay)] px-3 pt-24 pb-6 backdrop-blur-xl sm:px-4 md:px-6"
+            className="fixed inset-0 z-40 bg-[var(--modal-overlay)] px-3 pt-24 pb-6 backdrop-blur-xl sm:px-4 md:px-6 dark:bg-[var(--modal-overlay)]"
           >
             <motion.div
               initial={{ y: 14, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: 14, opacity: 0 }}
-              className="section-frame mx-auto max-w-2xl p-4 sm:p-5"
+              className="clay-card clay-card-strong mx-auto max-w-2xl p-4 sm:p-5"
             >
               <div className="mb-4">
                 <p className="section-kicker">Navigasi</p>
@@ -148,7 +150,7 @@ export function Navbar() {
               </div>
 
               <div className="grid gap-2">
-                {ARCANE_NAV.map((item) => {
+                {NAV_ITEMS.map((item) => {
                   const isActive = activeSection === item.section;
 
                   return (
@@ -160,15 +162,15 @@ export function Navbar() {
                         setMobileOpen(false);
                       }}
                       aria-current={isActive ? "page" : undefined}
-                      className={`rounded-xl border px-4 py-3 transition-colors duration-200 ${
+                      className={`rounded-[1.4rem] border px-4 py-3 transition-all duration-200 ${
                         isActive
-                          ? "border-[var(--glass-border-strong)] bg-[var(--parchment-strong)] text-[var(--foreground)]"
-                          : "border-[var(--glass-border)] bg-[var(--glass-bg)] text-[var(--muted)] hover:text-[var(--foreground)]"
+                          ? "nav-pill-active"
+                          : "border-[var(--border)] bg-[var(--surface)] text-[var(--muted)] shadow-[var(--clay-shadow-small)] hover:text-[var(--foreground)] dark:bg-[var(--surface)]"
                       }`}
                     >
-                      <span className="display-font block text-lg font-bold">{item.lore}</span>
-                      <span className="mt-1 block text-xs font-bold tracking-[0.16em] text-[var(--mana)] uppercase">
-                        {item.english}
+                      <span className="display-font block text-lg font-bold">{item.label}</span>
+                      <span className="mt-1 block text-xs font-bold tracking-[0.14em] uppercase opacity-75">
+                        {item.short}
                       </span>
                     </Link>
                   );

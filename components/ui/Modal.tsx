@@ -9,9 +9,10 @@ interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   children: React.ReactNode;
+  size?: "md" | "lg" | "xl";
 }
 
-export function Modal({ isOpen, onClose, children }: ModalProps) {
+export function Modal({ isOpen, onClose, children, size = "lg" }: ModalProps) {
   useEffect(() => {
     const handleEscape = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
@@ -36,6 +37,8 @@ export function Modal({ isOpen, onClose, children }: ModalProps) {
     return null;
   }
 
+  const sizeClass = size === "md" ? "max-w-3xl" : size === "xl" ? "max-w-6xl" : "max-w-5xl";
+
   return createPortal(
     <AnimatePresence>
       {isOpen && (
@@ -45,7 +48,7 @@ export function Modal({ isOpen, onClose, children }: ModalProps) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="absolute inset-0 bg-[var(--modal-overlay)] backdrop-blur-md"
+            className="absolute inset-0 bg-[var(--modal-overlay)] backdrop-blur-xl dark:bg-[var(--modal-overlay)]"
           />
 
           <div className="absolute inset-0 flex items-center justify-center p-3 sm:p-4 md:p-6">
@@ -57,18 +60,20 @@ export function Modal({ isOpen, onClose, children }: ModalProps) {
               onClick={(event) => event.stopPropagation()}
               role="dialog"
               aria-modal="true"
-              className="section-frame relative z-[1] max-h-[92vh] w-full max-w-5xl overflow-hidden"
+              className={`clay-card clay-card-strong relative z-[1] max-h-[90vh] w-full overflow-hidden ${sizeClass}`}
             >
               <button
                 type="button"
                 onClick={onClose}
-                className="absolute top-3 right-3 z-10 inline-flex h-10 w-10 items-center justify-center rounded-xl border border-[var(--floating-control-border)] bg-[var(--floating-control-bg)] text-[var(--foreground)] backdrop-blur-sm"
+                className="clay-icon absolute top-3 right-3 z-10 h-11 w-11 text-[var(--foreground)] dark:text-[var(--foreground)]"
                 aria-label="Tutup modal"
               >
                 <X className="h-4 w-4" />
               </button>
 
-              <div className="max-h-[92vh] overflow-y-auto">{children}</div>
+              <div data-native-scroll="true" className="max-h-[90vh] overflow-y-auto">
+                {children}
+              </div>
             </motion.div>
           </div>
         </div>

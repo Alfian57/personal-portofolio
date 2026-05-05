@@ -4,8 +4,8 @@ import { useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { BriefcaseBusiness, CalendarRange, ChevronRight, MapPin } from "lucide-react";
-import { ARCANE_LORE } from "@/constants/lore-content";
 import { PORTFOLIO_DATA } from "@/constants/portfolio-data";
+import { Clay3DAsset } from "@/components/ui/Clay3DAsset";
 import { Modal } from "@/components/ui/Modal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { fadeInUp, staggerContainer } from "@/lib/animations";
@@ -13,14 +13,14 @@ import { Experience as ExperienceType } from "@/types/portfolio";
 
 function getTypeStyles(type: ExperienceType["type"]) {
   if (type === "Contract") {
-    return "border-[var(--status-mana-border)] bg-[var(--status-mana-bg)] text-[var(--mana)]";
+    return "bg-[var(--success-soft)] text-teal-700 dark:text-teal-200";
   }
 
   if (type === "Internship") {
-    return "border-[var(--status-gold-border)] bg-[var(--status-gold-bg)] text-[var(--gold-bright)]";
+    return "bg-[var(--warning-soft)] text-amber-700 dark:text-amber-200";
   }
 
-  return "border-[var(--status-ember-border)] bg-[var(--status-ember-bg)] text-[var(--ember)]";
+  return "bg-[var(--danger-soft)] text-rose-700 dark:text-rose-200";
 }
 
 function getTypeLabel(type: ExperienceType["type"]) {
@@ -40,6 +40,11 @@ export function Experience() {
 
   return (
     <section id="experience" className="section-padding">
+      <Clay3DAsset
+        variant="cube"
+        delay="short"
+        className="top-[16%] left-4 hidden h-28 w-28 opacity-70 xl:block 2xl:left-[calc((100vw_-_80rem)/2_-_2.5rem)]"
+      />
       <div className="mx-auto max-w-7xl">
         <motion.div
           initial="initial"
@@ -47,158 +52,170 @@ export function Experience() {
           viewport={{ once: true, margin: "-80px" }}
           variants={staggerContainer}
         >
-          <SectionHeading section="experience" description={ARCANE_LORE.experience.sectionNote} />
+          <SectionHeading section="experience" />
 
-          <div className="relative">
-            <div className="absolute top-6 bottom-0 left-4 hidden w-px [background:var(--timeline-line)] lg:block" />
-
-            <div className="space-y-6">
-              {PORTFOLIO_DATA.experiences.map((experience, index) => (
-                <motion.article
-                  key={experience.id}
-                  variants={fadeInUp}
-                  className="relative lg:pl-14"
-                >
-                  <div className="absolute top-10 left-0 hidden lg:flex lg:h-8 lg:w-8 lg:items-center lg:justify-center lg:rounded-full lg:border lg:border-[var(--status-gold-border)] lg:bg-[var(--status-gold-bg)]">
-                    <div className="rune-dot" />
+          <div className="grid gap-4 lg:grid-cols-2">
+            {PORTFOLIO_DATA.experiences.map((experience, index) => (
+              <motion.button
+                key={experience.id}
+                type="button"
+                variants={fadeInUp}
+                onClick={() => setSelectedExperience(experience)}
+                className="clay-card card-hover grid gap-4 p-4 text-left md:p-5"
+              >
+                <div className="flex items-start justify-between gap-4">
+                  <div className="flex min-w-0 items-start gap-3">
+                    <div className="clay-icon h-11 w-11 shrink-0 rounded-[1.25rem]">
+                      <BriefcaseBusiness className="h-4 w-4" />
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-xs font-extrabold tracking-[0.14em] text-[var(--accent)] uppercase dark:text-[var(--accent)]">
+                        Pengalaman 0{index + 1}
+                      </p>
+                      <h3 className="display-font mt-1 truncate text-2xl font-extrabold text-[var(--foreground)] dark:text-[var(--foreground)]">
+                        {experience.title}
+                      </h3>
+                      <p className="mt-1 truncate text-base font-bold text-[var(--accent)] dark:text-[var(--accent)]">
+                        {experience.company}
+                      </p>
+                    </div>
                   </div>
 
-                  <button
-                    type="button"
-                    onClick={() => setSelectedExperience(experience)}
-                    className="section-frame card-hover w-full p-5 text-left sm:p-6 md:p-7"
+                  <span
+                    className={`clay-chip shrink-0 px-3 py-1 text-xs uppercase ${getTypeStyles(
+                      experience.type
+                    )}`}
                   >
-                    <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
-                      <div className="max-w-3xl">
-                        <p className="text-xs font-bold tracking-[0.16em] text-[var(--mana)] uppercase">
-                          Pengalaman 0{index + 1}
-                        </p>
-                        <div className="mt-3 flex flex-wrap items-center gap-3">
-                          <h3 className="display-font text-3xl text-[var(--foreground)]">
-                            {experience.title}
-                          </h3>
-                          <span
-                            className={`rounded-full border px-3 py-1 text-xs font-bold tracking-[0.14em] uppercase ${getTypeStyles(experience.type)}`}
-                          >
-                            {getTypeLabel(experience.type)}
-                          </span>
-                        </div>
-                        <p className="mt-3 text-lg text-[var(--gold-bright)]">
-                          {experience.company}
-                        </p>
-                      </div>
+                    {getTypeLabel(experience.type)}
+                  </span>
+                </div>
 
-                      <div className="space-y-2 text-sm text-[var(--muted)]">
-                        <div className="flex items-center gap-2">
-                          <CalendarRange className="h-4 w-4 text-[var(--mana)]" />
-                          <span>{experience.period}</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <MapPin className="h-4 w-4 text-[var(--mana)]" />
-                          <span>{experience.location}</span>
-                        </div>
-                      </div>
-                    </div>
+                <div className="grid gap-2 text-sm text-[var(--muted)] sm:grid-cols-2 dark:text-[var(--muted)]">
+                  <span className="inline-flex items-center gap-2">
+                    <CalendarRange className="h-4 w-4 shrink-0 text-[var(--accent)]" />
+                    <span className="truncate">{experience.period}</span>
+                  </span>
+                  <span className="inline-flex items-center gap-2">
+                    <MapPin className="h-4 w-4 shrink-0 text-[var(--accent)]" />
+                    <span className="truncate">{experience.location}</span>
+                  </span>
+                </div>
 
-                    <div className="mt-6 grid gap-6 lg:grid-cols-[1fr_auto] lg:items-end">
-                      <ul className="space-y-3">
-                        {experience.description.map((item) => (
-                          <li
-                            key={item}
-                            className="flex gap-3 text-sm leading-7 text-[var(--muted)]"
-                          >
-                            <span className="rune-dot mt-2 h-2.5 w-2.5 shrink-0" />
-                            <span>{item}</span>
-                          </li>
-                        ))}
-                      </ul>
+                <p className="line-clamp-2 text-sm leading-6 text-[var(--muted)] dark:text-[var(--muted)]">
+                  {experience.description[0]}
+                </p>
 
-                      <div className="flex items-center justify-between gap-5 lg:flex-col lg:items-end">
-                        <div className="flex flex-wrap gap-2 lg:justify-end">
-                          {experience.technologies.map((tech) => (
-                            <span key={tech} className="arcane-chip">
-                              {tech}
-                            </span>
-                          ))}
-                        </div>
-                        <span className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--gold-bright)]">
-                          Lihat detail
-                          <ChevronRight className="h-4 w-4" />
-                        </span>
-                      </div>
-                    </div>
-                  </button>
-                </motion.article>
-              ))}
-            </div>
+                <div className="flex items-center justify-between gap-4">
+                  <div className="flex min-w-0 flex-wrap gap-2">
+                    {experience.technologies.slice(0, 3).map((tech) => (
+                      <span key={tech} className="clay-chip">
+                        {tech}
+                      </span>
+                    ))}
+                    {experience.technologies.length > 3 && (
+                      <span className="clay-chip">+{experience.technologies.length - 3}</span>
+                    )}
+                  </div>
+                  <span className="inline-flex shrink-0 items-center gap-2 text-sm font-extrabold text-[var(--accent)] dark:text-[var(--accent)]">
+                    Detail
+                    <ChevronRight className="h-4 w-4" />
+                  </span>
+                </div>
+              </motion.button>
+            ))}
           </div>
         </motion.div>
       </div>
 
-      <Modal isOpen={!!selectedExperience} onClose={() => setSelectedExperience(null)}>
+      <Modal isOpen={!!selectedExperience} onClose={() => setSelectedExperience(null)} size="lg">
         {selectedExperience && (
-          <div className="p-6 md:p-8">
-            <div className="flex items-start gap-4">
-              <div className="rounded-xl border border-[var(--status-gold-border)] bg-[var(--status-gold-bg)] p-3">
-                <BriefcaseBusiness className="h-6 w-6 text-[var(--gold-bright)]" />
-              </div>
-              <div className="flex-1">
-                <p className="section-kicker">{ARCANE_LORE.experience.modalTitle}</p>
-                <h2 className="display-font mt-3 text-4xl text-[var(--foreground)]">
-                  {selectedExperience.title}
-                </h2>
-                <p className="mt-2 text-lg text-[var(--gold-bright)]">
-                  {selectedExperience.company}
-                </p>
-                <div className="mt-4 flex flex-wrap gap-4 text-sm text-[var(--muted)]">
-                  <span className="inline-flex items-center gap-2">
-                    <CalendarRange className="h-4 w-4 text-[var(--mana)]" />
-                    {selectedExperience.period}
-                  </span>
-                  <span className="inline-flex items-center gap-2">
-                    <MapPin className="h-4 w-4 text-[var(--mana)]" />
-                    {selectedExperience.location}
-                  </span>
+          <div className="p-5 md:p-7">
+            <div className="grid gap-5 lg:grid-cols-[1fr_auto] lg:items-start">
+              <div className="flex min-w-0 items-start gap-4">
+                <div className="clay-icon h-14 w-14 shrink-0">
+                  <BriefcaseBusiness className="h-6 w-6" />
                 </div>
+                <div className="min-w-0 flex-1">
+                  <p className="section-kicker">Detail Pengalaman</p>
+                  <h2 className="display-font mt-3 text-3xl leading-tight font-extrabold text-[var(--foreground)] md:text-4xl dark:text-[var(--foreground)]">
+                    {selectedExperience.title}
+                  </h2>
+                  <p className="mt-2 text-lg font-bold text-[var(--accent)] dark:text-[var(--accent)]">
+                    {selectedExperience.company}
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex flex-wrap gap-2 lg:max-w-xs lg:justify-end">
+                {selectedExperience.technologies.map((tech) => (
+                  <span key={tech} className="clay-chip">
+                    {tech}
+                  </span>
+                ))}
               </div>
             </div>
 
-            <div className="ornament-line my-7" />
+            <div className="mt-5 grid gap-3 text-sm text-[var(--muted)] sm:grid-cols-2 dark:text-[var(--muted)]">
+              <div className="clay-inset flex items-center gap-3 px-4 py-3">
+                <CalendarRange className="h-4 w-4 shrink-0 text-[var(--accent)]" />
+                <span>{selectedExperience.period}</span>
+              </div>
+              <div className="clay-inset flex items-center gap-3 px-4 py-3">
+                <MapPin className="h-4 w-4 shrink-0 text-[var(--accent)]" />
+                <span>{selectedExperience.location}</span>
+              </div>
+            </div>
 
-            <div className="grid gap-7 lg:grid-cols-[1fr_0.75fr]">
-              <div>
+            <div className="soft-divider my-6" />
+
+            <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(16rem,0.55fr)]">
+              <div className="clay-inset p-5">
                 <p className="section-kicker">Tanggung Jawab Utama</p>
                 <ul className="mt-4 space-y-3">
                   {selectedExperience.description.map((item) => (
-                    <li key={item} className="flex gap-3 text-sm leading-7 text-[var(--muted)]">
-                      <span className="rune-dot mt-2 h-2.5 w-2.5 shrink-0" />
+                    <li
+                      key={item}
+                      className="flex gap-3 text-sm leading-7 text-[var(--muted)] dark:text-[var(--muted)]"
+                    >
+                      <span className="status-dot mt-2 h-2.5 w-2.5 shrink-0" />
                       <span>{item}</span>
                     </li>
                   ))}
                 </ul>
               </div>
 
-              <div className="parchment-surface p-5">
-                <p className="section-kicker">Teknologi</p>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {selectedExperience.technologies.map((tech) => (
-                    <span key={tech} className="arcane-chip">
-                      {tech}
-                    </span>
-                  ))}
+              <aside className="clay-card p-5">
+                <div className="flex items-center gap-3">
+                  <div className="clay-icon h-11 w-11 rounded-[1.25rem]">
+                    <BriefcaseBusiness className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <p className="section-kicker">Ringkasan</p>
+                    <p className="mt-1 text-sm leading-6 text-[var(--muted)] dark:text-[var(--muted)]">
+                      {selectedExperience.type === "Internship"
+                        ? "Program magang industri"
+                        : selectedExperience.type === "Contract"
+                          ? "Kontrak profesional"
+                          : "Peran full-time"}
+                    </p>
+                  </div>
                 </div>
-              </div>
+
+                <div className="soft-divider my-4" />
+
+                <p className="text-sm leading-7 text-[var(--muted)] dark:text-[var(--muted)]">
+                  Detail ini memuat tanggung jawab inti, teknologi yang digunakan, dan dokumentasi
+                  visual bila tersedia.
+                </p>
+              </aside>
             </div>
 
             {selectedExperience.images && selectedExperience.images.length > 0 && (
-              <div className="mt-8">
+              <div className="mt-6">
                 <p className="section-kicker">Dokumentasi</p>
-                <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                  {selectedExperience.images.map((image, index) => (
-                    <div
-                      key={image}
-                      className="relative aspect-video overflow-hidden rounded-xl border border-[var(--image-border)]"
-                    >
+                <div className="mt-3 grid gap-3 sm:grid-cols-2">
+                  {selectedExperience.images.slice(0, 2).map((image, index) => (
+                    <div key={image} className="clay-inset relative aspect-[16/7] overflow-hidden">
                       <Image
                         src={image}
                         alt={`${selectedExperience.title} ${index + 1}`}

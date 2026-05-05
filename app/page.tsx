@@ -8,16 +8,16 @@ import { Achievements } from "@/components/sections/Achievements";
 import { Certifications } from "@/components/sections/Certifications";
 import { Contact } from "@/components/sections/Contact";
 import { Footer } from "@/components/sections/Footer";
+import { ClayAmbientStage } from "@/components/ui/ClayAmbientStage";
 import { CustomCursor } from "@/components/ui/CustomCursor";
+import { SectionScrollController } from "@/components/ui/SectionScrollController";
 
 export default function Portfolio() {
   return (
-    <main className="site-shell min-h-screen text-[var(--foreground)]">
+    <main className="site-shell min-h-screen text-[var(--foreground)] dark:text-[var(--foreground)]">
       <CustomCursor />
-      <div aria-hidden="true" className="world-backdrop">
-        <div className="world-backdrop__veil" />
-        <div className="world-backdrop__grid" />
-      </div>
+      <SectionScrollController />
+      <ClayAmbientStage />
       <Navbar />
       <Hero />
       <About />

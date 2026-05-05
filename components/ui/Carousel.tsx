@@ -30,7 +30,7 @@ export function Carousel({ images, alt }: CarouselProps) {
 
   if (images.length === 0) {
     return (
-      <div className="parchment-surface flex h-80 items-center justify-center">
+      <div className="clay-inset flex h-80 items-center justify-center">
         <p className="text-sm text-[var(--muted)]">Tidak ada visual yang tercatat.</p>
       </div>
     );
@@ -38,7 +38,7 @@ export function Carousel({ images, alt }: CarouselProps) {
 
   return (
     <div className="relative">
-      <div className="relative h-[18rem] overflow-hidden rounded-2xl border border-[var(--image-border)] bg-[var(--carousel-bg)] md:h-[28rem]">
+      <div className="clay-inset relative h-[18rem] overflow-hidden md:h-[28rem]">
         <AnimatePresence initial={false} custom={direction}>
           <motion.div
             key={currentIndex}
@@ -72,9 +72,9 @@ export function Carousel({ images, alt }: CarouselProps) {
           </motion.div>
         </AnimatePresence>
 
-        <div className="absolute inset-0 [background:var(--media-overlay)]" />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-transparent dark:from-slate-950/55" />
 
-        <div className="absolute bottom-4 left-4 rounded-full border border-[var(--floating-control-border)] bg-[var(--media-caption-bg)] px-4 py-2 text-xs font-bold tracking-[0.14em] text-[var(--mana)] uppercase backdrop-blur-sm">
+        <div className="clay-chip absolute bottom-4 left-4 bg-[var(--surface)]/90 text-[var(--foreground)] backdrop-blur-sm dark:bg-[var(--surface)]/90">
           Visual {currentIndex + 1} / {images.length}
         </div>
 
@@ -83,7 +83,7 @@ export function Carousel({ images, alt }: CarouselProps) {
             <button
               type="button"
               onClick={goToPrevious}
-              className="absolute top-1/2 left-4 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-[var(--floating-control-border)] bg-[var(--floating-control-bg)] text-[var(--foreground)] backdrop-blur-sm"
+              className="clay-icon absolute top-1/2 left-4 h-11 w-11 -translate-y-1/2 text-[var(--foreground)] backdrop-blur-sm dark:text-[var(--foreground)]"
               aria-label="Gambar sebelumnya"
             >
               <ChevronLeft className="h-5 w-5" />
@@ -91,7 +91,7 @@ export function Carousel({ images, alt }: CarouselProps) {
             <button
               type="button"
               onClick={goToNext}
-              className="absolute top-1/2 right-4 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-[var(--floating-control-border)] bg-[var(--floating-control-bg)] text-[var(--foreground)] backdrop-blur-sm"
+              className="clay-icon absolute top-1/2 right-4 h-11 w-11 -translate-y-1/2 text-[var(--foreground)] backdrop-blur-sm dark:text-[var(--foreground)]"
               aria-label="Gambar berikutnya"
             >
               <ChevronRight className="h-5 w-5" />
@@ -114,7 +114,9 @@ export function Carousel({ images, alt }: CarouselProps) {
                   setCurrentIndex(index);
                 }}
                 className={`h-2.5 rounded-full transition-all ${
-                  isActive ? "w-10 bg-[var(--gold-bright)]" : "w-2.5 bg-[var(--dot-inactive)]"
+                  isActive
+                    ? "w-10 bg-[image:var(--accent-gradient)]"
+                    : "w-2.5 bg-slate-300 dark:bg-slate-600"
                 }`}
                 aria-label={`Ke gambar ${index + 1}`}
               />

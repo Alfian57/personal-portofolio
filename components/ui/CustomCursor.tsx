@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { motion, useMotionValue, useReducedMotion, useSpring } from "framer-motion";
+import { useEffect, useRef } from "react";
 
 const interactiveSelector = [
   "a",
@@ -15,75 +14,88 @@ const interactiveSelector = [
 ].join(",");
 
 export function CustomCursor() {
-  const prefersReducedMotion = useReducedMotion();
-  const cursorX = useMotionValue(-80);
-  const cursorY = useMotionValue(-80);
-  const springX = useSpring(cursorX, { stiffness: 520, damping: 34, mass: 0.32 });
-  const springY = useSpring(cursorY, { stiffness: 520, damping: 34, mass: 0.32 });
-  const [isVisible, setIsVisible] = useState(false);
-  const [isInteractive, setIsInteractive] = useState(false);
-  const interactiveRef = useRef(false);
+  const ringRef = useRef<HTMLDivElement | null>(null);
+  const dotRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    if (prefersReducedMotion || window.matchMedia("(pointer: coarse)").matches) {
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const coarsePointer = window.matchMedia("(pointer: coarse)").matches;
+
+    if (prefersReducedMotion || coarsePointer || !ringRef.current || !dotRef.current) {
       return;
     }
 
     const root = document.documentElement;
+    const ring = ringRef.current;
+    const dot = dotRef.current;
+    const pointer = { x: -80, y: -80 };
+    const ringPosition = { x: -80, y: -80 };
+    let frame = 0;
+    let visible = false;
+    let interactive = false;
+
     root.classList.add("custom-cursor-enabled");
+
+    const setVisibility = (nextVisible: boolean) => {
+      if (visible === nextVisible) {
+        return;
+      }
+
+      visible = nextVisible;
+      ring.dataset.visible = String(nextVisible);
+      dot.dataset.visible = String(nextVisible);
+    };
+
+    const setInteractive = (nextInteractive: boolean) => {
+      if (interactive === nextInteractive) {
+        return;
+      }
+
+      interactive = nextInteractive;
+      ring.dataset.interactive = String(nextInteractive);
+      dot.dataset.interactive = String(nextInteractive);
+    };
+
+    const animate = () => {
+      ringPosition.x += (pointer.x - ringPosition.x) * 0.24;
+      ringPosition.y += (pointer.y - ringPosition.y) * 0.24;
+
+      ring.style.transform = `translate3d(${ringPosition.x}px, ${ringPosition.y}px, 0) translate(-50%, -50%)`;
+      dot.style.transform = `translate3d(${pointer.x}px, ${pointer.y}px, 0) translate(-50%, -50%)`;
+      frame = requestAnimationFrame(animate);
+    };
 
     const handlePointerMove = (event: PointerEvent) => {
       if (event.pointerType !== "mouse") {
         return;
       }
 
-      cursorX.set(event.clientX);
-      cursorY.set(event.clientY);
-      setIsVisible(true);
+      pointer.x = event.clientX;
+      pointer.y = event.clientY;
+      setVisibility(true);
 
       const target = event.target instanceof Element ? event.target : null;
-      const nextInteractive = Boolean(target?.closest(interactiveSelector));
-
-      if (interactiveRef.current !== nextInteractive) {
-        interactiveRef.current = nextInteractive;
-        setIsInteractive(nextInteractive);
-      }
+      setInteractive(Boolean(target?.closest(interactiveSelector)));
     };
 
-    const handlePointerLeave = () => {
-      setIsVisible(false);
-    };
+    const handlePointerLeave = () => setVisibility(false);
 
+    frame = requestAnimationFrame(animate);
     window.addEventListener("pointermove", handlePointerMove, { passive: true });
     document.addEventListener("mouseleave", handlePointerLeave);
 
     return () => {
       root.classList.remove("custom-cursor-enabled");
+      cancelAnimationFrame(frame);
       window.removeEventListener("pointermove", handlePointerMove);
       document.removeEventListener("mouseleave", handlePointerLeave);
     };
-  }, [cursorX, cursorY, prefersReducedMotion]);
-
-  if (prefersReducedMotion) {
-    return null;
-  }
+  }, []);
 
   return (
     <>
-      <motion.div
-        aria-hidden="true"
-        className="custom-cursor-ring"
-        style={{ left: springX, top: springY }}
-        animate={{ opacity: isVisible ? 1 : 0, scale: isInteractive ? 1.65 : 1 }}
-        transition={{ duration: 0.16, ease: "easeOut" }}
-      />
-      <motion.div
-        aria-hidden="true"
-        className="custom-cursor-dot"
-        style={{ left: cursorX, top: cursorY }}
-        animate={{ opacity: isVisible ? 1 : 0, scale: isInteractive ? 0.72 : 1 }}
-        transition={{ duration: 0.12, ease: "easeOut" }}
-      />
+      <div ref={ringRef} aria-hidden="true" className="custom-cursor-ring" />
+      <div ref={dotRef} aria-hidden="true" className="custom-cursor-dot" />
     </>
   );
 }

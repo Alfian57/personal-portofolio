@@ -1,15 +1,20 @@
 "use client";
 
-import Image from "next/image";
 import { motion } from "framer-motion";
 import { CalendarRange, GraduationCap, MapPin } from "lucide-react";
 import { PORTFOLIO_DATA } from "@/constants/portfolio-data";
+import { Clay3DAsset } from "@/components/ui/Clay3DAsset";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { fadeInUp, staggerContainer } from "@/lib/animations";
 
 export function Education() {
   return (
     <section id="education" className="section-padding">
+      <Clay3DAsset
+        variant="orbit"
+        delay="medium"
+        className="top-[15%] right-4 hidden h-28 w-28 opacity-75 xl:block 2xl:right-[calc((100vw_-_80rem)/2_-_2rem)]"
+      />
       <div className="mx-auto max-w-7xl">
         <motion.div
           initial="initial"
@@ -24,44 +29,39 @@ export function Education() {
               <motion.article
                 key={item.id}
                 variants={fadeInUp}
-                className="section-frame card-hover relative overflow-hidden p-5 sm:p-6 md:p-7"
+                className="clay-card card-hover p-5 sm:p-6 md:p-7"
               >
-                <div className="pointer-events-none absolute top-2 right-2 h-32 w-24 opacity-[0.22]">
-                  <Image
-                    src="/isekai/academy-spire.svg"
-                    alt=""
-                    width={96}
-                    height={128}
-                    className="h-full w-full object-contain"
-                  />
-                </div>
                 <div className="flex items-start gap-4">
-                  <div className="rounded-xl border border-[var(--status-gold-border)] bg-[var(--status-gold-bg)] p-3">
-                    <GraduationCap className="h-6 w-6 text-[var(--gold-bright)]" />
+                  <div className="clay-icon h-14 w-14 shrink-0">
+                    <GraduationCap className="h-6 w-6" />
                   </div>
 
                   <div className="flex-1">
                     <p className="section-kicker">Riwayat Pendidikan</p>
-                    <h3 className="display-font mt-3 text-3xl text-[var(--foreground)]">
+                    <h3 className="display-font mt-3 text-3xl font-extrabold text-[var(--foreground)] dark:text-[var(--foreground)]">
                       {item.degree}
                     </h3>
-                    <p className="mt-2 text-lg text-[var(--gold-bright)]">{item.institution}</p>
+                    <p className="mt-2 text-lg font-bold text-[var(--accent)] dark:text-[var(--accent)]">
+                      {item.institution}
+                    </p>
                   </div>
                 </div>
 
-                <div className="mt-6 flex flex-wrap gap-4 text-sm text-[var(--muted)]">
-                  <span className="inline-flex items-center gap-2">
-                    <CalendarRange className="h-4 w-4 text-[var(--mana)]" />
+                <div className="mt-6 flex flex-wrap gap-3 text-sm text-[var(--muted)] dark:text-[var(--muted)]">
+                  <span className="clay-chip">
+                    <CalendarRange className="h-4 w-4 text-[var(--accent)]" />
                     {item.period}
                   </span>
-                  <span className="inline-flex items-center gap-2">
-                    <MapPin className="h-4 w-4 text-[var(--mana)]" />
+                  <span className="clay-chip">
+                    <MapPin className="h-4 w-4 text-[var(--accent)]" />
                     {item.location}
                   </span>
                 </div>
 
                 {item.description && (
-                  <p className="mt-6 text-sm leading-8 text-[var(--muted)]">{item.description}</p>
+                  <p className="mt-6 text-sm leading-8 text-[var(--muted)] dark:text-[var(--muted)]">
+                    {item.description}
+                  </p>
                 )}
               </motion.article>
             ))}

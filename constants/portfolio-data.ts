@@ -126,7 +126,7 @@ export const PORTFOLIO_DATA: PortfolioData = {
       title: "SIM PKM - Website PKM Internal UTY",
       description:
         "Mengembangkan sistem manajemen dan penilaian proposal internal berbasis Laravel menggunakan arsitektur monorepo untuk program PKM UTY 2026. Membangun sistem otorisasi tiga peran (Student, Admin, Reviewer) dan logika penilaian yang terintegrasi guna memastikan efisiensi siklus pengajuan proposal.",
-      image: "/isekai/project-vision.svg",
+      image: "/globe.svg",
       technologies: ["Laravel", "PHP"],
       tags: ["Web Development", "Backend"],
       role: "Backend Developer",
@@ -146,7 +146,7 @@ export const PORTFOLIO_DATA: PortfolioData = {
       title: "Panca Trivia - Website Edukasi Pancasila",
       description:
         "Membangun aplikasi web edukatif berbasis Laravel menggunakan konsep gamification untuk memfasilitasi pembelajaran nilai-nilai Pancasila. Mengimplementasikan fitur kuis interaktif dan sistem leveling untuk menciptakan pengalaman belajar yang dinamis dan terukur.",
-      image: "/isekai/project-vision.svg",
+      image: "/globe.svg",
       technologies: ["Laravel", "PHP", "JavaScript", "Gamification", "Database Design"],
       tags: ["Edukasi", "Web Development", "Full Stack"],
       role: "Full Stack Developer",

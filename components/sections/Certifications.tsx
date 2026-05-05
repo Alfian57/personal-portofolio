@@ -2,50 +2,48 @@
 
 import { useMemo, useState } from "react";
 import Image from "next/image";
-import { AnimatePresence, motion } from "framer-motion";
-import { Award, CalendarRange, ExternalLink } from "lucide-react";
-import { ARCANE_LORE } from "@/constants/lore-content";
+import { motion } from "framer-motion";
+import { Award, CalendarRange, ExternalLink, Layers3 } from "lucide-react";
 import { PORTFOLIO_DATA } from "@/constants/portfolio-data";
+import { UI_COPY } from "@/constants/section-content";
+import { Clay3DAsset } from "@/components/ui/Clay3DAsset";
 import { Modal } from "@/components/ui/Modal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { fadeInUp, staggerContainer } from "@/lib/animations";
 import { Certification } from "@/types/portfolio";
 
+const previewLimit = 8;
+
 export function Certifications() {
   const [selectedCertification, setSelectedCertification] = useState<Certification | null>(null);
-  const [selectedIssuer, setSelectedIssuer] = useState<string>(
-    ARCANE_LORE.certifications.allFilter
-  );
-  const [showAll, setShowAll] = useState(false);
+  const [showDirectory, setShowDirectory] = useState(false);
 
-  const issuers = useMemo(() => {
-    const allIssuers = new Set<string>();
+  const issuerStats = useMemo(() => {
+    const counts = new Map<string, number>();
+
     PORTFOLIO_DATA.certifications.forEach((certification) => {
-      allIssuers.add(certification.issuer);
+      counts.set(certification.issuer, (counts.get(certification.issuer) ?? 0) + 1);
     });
 
-    return [ARCANE_LORE.certifications.allFilter, ...Array.from(allIssuers).sort()];
+    return Array.from(counts.entries()).sort((a, b) => b[1] - a[1]);
   }, []);
 
-  const filteredCertifications = useMemo(() => {
-    if (selectedIssuer === ARCANE_LORE.certifications.allFilter) {
-      return PORTFOLIO_DATA.certifications;
-    }
-
-    return PORTFOLIO_DATA.certifications.filter(
-      (certification) => certification.issuer === selectedIssuer
-    );
-  }, [selectedIssuer]);
-
-  const displayedCertifications = showAll
-    ? filteredCertifications
-    : filteredCertifications.slice(0, 6);
+  const previewCertifications = PORTFOLIO_DATA.certifications.slice(0, previewLimit);
+  const hiddenCount = Math.max(
+    PORTFOLIO_DATA.certifications.length - previewCertifications.length,
+    0
+  );
   const credentialLink = selectedCertification?.credentialUrl?.startsWith("http")
     ? selectedCertification.credentialUrl
     : undefined;
 
   return (
     <section id="certifications" className="section-padding">
+      <Clay3DAsset
+        variant="badge"
+        delay="long"
+        className="top-[13%] right-4 hidden h-28 w-28 opacity-70 xl:block 2xl:right-[calc((100vw_-_80rem)/2_-_2rem)]"
+      />
       <div className="mx-auto max-w-7xl">
         <motion.div
           initial="initial"
@@ -55,147 +53,146 @@ export function Certifications() {
         >
           <SectionHeading section="certifications" />
 
-          <motion.div
-            variants={fadeInUp}
-            className="hide-scrollbar mb-8 flex gap-2 overflow-x-auto pb-2"
-          >
-            {issuers.map((issuer) => {
-              const isActive = selectedIssuer === issuer;
+          <div className="grid gap-4 lg:grid-cols-[0.72fr_1.28fr]">
+            <motion.aside variants={fadeInUp} className="clay-card p-4 sm:p-5">
+              <div className="flex items-start gap-4">
+                <div className="clay-icon h-12 w-12 shrink-0 rounded-[1.4rem]">
+                  <Layers3 className="h-6 w-6" />
+                </div>
+                <div>
+                  <p className="section-kicker">Ringkasan Kredensial</p>
+                  <p className="display-font mt-2 text-5xl font-extrabold text-[var(--foreground)] dark:text-[var(--foreground)]">
+                    {PORTFOLIO_DATA.certifications.length}
+                  </p>
+                </div>
+              </div>
 
-              return (
+              <p className="mt-3 text-sm leading-6 text-[var(--muted)] dark:text-[var(--muted)]">
+                Sertifikasi disusun sebagai ringkasan agar section tetap satu layar. Daftar lengkap
+                dan gambar sertifikat tersedia melalui detail.
+              </p>
+
+              <div className="soft-divider my-4" />
+
+              <div className="grid gap-2">
+                {issuerStats.slice(0, 5).map(([issuer, count]) => (
+                  <div
+                    key={issuer}
+                    className="clay-inset flex items-center justify-between gap-3 px-3 py-2"
+                  >
+                    <span className="truncate text-sm font-bold text-[var(--foreground)] dark:text-[var(--foreground)]">
+                      {issuer}
+                    </span>
+                    <span className="clay-chip shrink-0 px-2.5 py-1 text-xs">{count}</span>
+                  </div>
+                ))}
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setShowDirectory(true)}
+                className="clay-button clay-button-primary mt-4 w-full"
+              >
+                Lihat Semua Sertifikasi
+              </button>
+            </motion.aside>
+
+            <motion.div variants={fadeInUp} className="grid content-start gap-2.5 sm:grid-cols-2">
+              {previewCertifications.map((certification, index) => (
                 <button
-                  key={issuer}
-                  type="button"
-                  onClick={() => {
-                    setShowAll(false);
-                    setSelectedIssuer(issuer);
-                  }}
-                  aria-pressed={isActive}
-                  className={`shrink-0 rounded-full border px-4 py-2 text-sm transition-all ${
-                    isActive
-                      ? "border-[var(--filter-active-border)] bg-[var(--filter-active-bg)] text-[var(--foreground)]"
-                      : "border-[var(--filter-idle-border)] bg-[var(--filter-idle-bg)] text-[var(--muted)] hover:border-[var(--filter-hover-border)] hover:text-[var(--foreground)]"
-                  }`}
-                >
-                  {issuer}
-                </button>
-              );
-            })}
-          </motion.div>
-
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={selectedIssuer}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.24 }}
-              className="grid gap-5 md:grid-cols-2 xl:grid-cols-3"
-            >
-              {displayedCertifications.map((certification, index) => (
-                <motion.button
                   key={certification.id}
                   type="button"
                   onClick={() => setSelectedCertification(certification)}
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.28, delay: index * 0.04 }}
-                  className="section-frame card-hover overflow-hidden p-0 text-left"
+                  className="clay-card card-hover flex items-center gap-3 p-3 text-left"
                 >
-                  <div className="relative h-48 overflow-hidden bg-[var(--image-well)]">
-                    {certification.image ? (
-                      <Image
-                        src={certification.image}
-                        alt={certification.title}
-                        fill
-                        sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
-                        className="object-contain p-3"
-                      />
-                    ) : (
-                      <div className="flex h-full items-center justify-center [background:var(--empty-visual-bg)]">
-                        <Award className="h-12 w-12 text-[var(--gold-bright)]" />
-                      </div>
-                    )}
-                    <div className="absolute inset-0 [background:var(--media-overlay-strong)]" />
-                    <div className="absolute right-4 bottom-4 left-4">
-                      <p className="text-xs font-bold tracking-[0.16em] text-[var(--mana)] uppercase">
-                        Sertifikasi 0{index + 1}
-                      </p>
-                    </div>
+                  <div className="clay-icon h-11 w-11 shrink-0 rounded-[1.15rem]">
+                    <Award className="h-5 w-5" />
                   </div>
 
-                  <div className="p-5 sm:p-6">
-                    <h3 className="display-font text-2xl text-[var(--foreground)]">
-                      {certification.title}
-                    </h3>
-                    <p className="mt-2 text-base text-[var(--gold-bright)]">
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-start justify-between gap-2">
+                      <h3 className="display-font line-clamp-2 text-sm leading-tight font-extrabold text-[var(--foreground)] dark:text-[var(--foreground)]">
+                        {certification.title}
+                      </h3>
+                      <span className="text-[0.68rem] font-extrabold tracking-[0.12em] text-[var(--accent)]">
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
+                    </div>
+                    <p className="mt-1 truncate text-xs font-bold text-[var(--accent)] dark:text-[var(--accent)]">
                       {certification.issuer}
                     </p>
-                    <div className="mt-3 flex items-center gap-2 text-sm text-[var(--muted)]">
-                      <CalendarRange className="h-4 w-4 text-[var(--mana)]" />
+                    <div className="mt-1.5 flex items-center gap-2 text-xs text-[var(--muted)] dark:text-[var(--muted)]">
+                      <CalendarRange className="h-3.5 w-3.5 shrink-0 text-[var(--accent)]" />
                       <span>{certification.date}</span>
                     </div>
-
-                    {certification.skills && (
-                      <div className="mt-5 flex flex-wrap gap-2">
-                        {certification.skills.slice(0, 3).map((skill) => (
-                          <span key={skill} className="arcane-chip">
-                            {skill}
-                          </span>
-                        ))}
-                      </div>
-                    )}
                   </div>
-                </motion.button>
+                </button>
               ))}
-            </motion.div>
-          </AnimatePresence>
 
-          {displayedCertifications.length === 0 && (
-            <motion.div variants={fadeInUp} className="section-frame p-6 text-center md:p-8">
-              <p className="section-kicker">Belum ada sertifikasi</p>
-              <h3 className="display-font mt-3 text-2xl font-bold text-[var(--foreground)]">
-                Tidak ada sertifikasi dari{" "}
-                <span className="text-[var(--gold-bright)]">{selectedIssuer}</span>.
-              </h3>
-              <p className="mx-auto mt-3 max-w-xl text-sm leading-7 text-[var(--muted)]">
-                Pilih penerbit lain atau kembali ke semua penerbit untuk melihat daftar sertifikasi
-                yang tersedia.
-              </p>
-              <button
-                type="button"
-                onClick={() => {
-                  setShowAll(false);
-                  setSelectedIssuer(ARCANE_LORE.certifications.allFilter);
-                }}
-                className="ghost-button mt-5"
-              >
-                Tampilkan Semua
-              </button>
+              {hiddenCount > 0 && (
+                <button
+                  type="button"
+                  onClick={() => setShowDirectory(true)}
+                  className="clay-card card-hover flex items-center justify-center p-4 text-center sm:col-span-2"
+                >
+                  <span className="text-sm font-extrabold text-[var(--accent)] dark:text-[var(--accent)]">
+                    +{hiddenCount} sertifikasi lainnya
+                  </span>
+                </button>
+              )}
             </motion.div>
-          )}
-
-          {filteredCertifications.length > 6 && (
-            <motion.div variants={fadeInUp} className="mt-8 text-center">
-              <button
-                type="button"
-                onClick={() => setShowAll((value) => !value)}
-                className="ghost-button"
-              >
-                {showAll
-                  ? "Tampilkan Lebih Ringkas"
-                  : `Tampilkan Sertifikasi Lainnya (${filteredCertifications.length - 6})`}
-              </button>
-            </motion.div>
-          )}
+          </div>
         </motion.div>
       </div>
 
-      <Modal isOpen={!!selectedCertification} onClose={() => setSelectedCertification(null)}>
+      <Modal isOpen={showDirectory} onClose={() => setShowDirectory(false)} size="xl">
+        <div className="p-6 md:p-8">
+          <p className="section-kicker">Direktori Sertifikasi</p>
+          <h2 className="display-font mt-3 text-4xl font-extrabold text-[var(--foreground)] dark:text-[var(--foreground)]">
+            Semua Sertifikasi
+          </h2>
+          <div className="mt-6 grid gap-2.5 md:grid-cols-2">
+            {PORTFOLIO_DATA.certifications.map((certification, index) => (
+              <button
+                key={certification.id}
+                type="button"
+                onClick={() => {
+                  setShowDirectory(false);
+                  setSelectedCertification(certification);
+                }}
+                className="clay-inset flex items-center gap-3 p-3 text-left"
+              >
+                <div className="clay-icon h-11 w-11 shrink-0 rounded-[1.15rem]">
+                  <Award className="h-5 w-5" />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-start justify-between gap-3">
+                    <p className="line-clamp-2 font-bold text-[var(--foreground)] dark:text-[var(--foreground)]">
+                      {certification.title}
+                    </p>
+                    <span className="text-xs font-extrabold tracking-[0.12em] text-[var(--accent)]">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                  </div>
+                  <p className="mt-1 text-sm text-[var(--muted)] dark:text-[var(--muted)]">
+                    {certification.issuer} / {certification.date}
+                  </p>
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+      </Modal>
+
+      <Modal
+        isOpen={!!selectedCertification}
+        onClose={() => setSelectedCertification(null)}
+        size="lg"
+      >
         {selectedCertification && (
           <div className="p-6 md:p-8">
             {selectedCertification.image && (
-              <div className="relative mb-7 h-64 overflow-hidden rounded-2xl border border-[var(--image-border)] bg-[var(--image-well)]">
+              <div className="clay-inset relative mb-7 h-64 overflow-hidden">
                 <Image
                   src={selectedCertification.image}
                   alt={selectedCertification.title}
@@ -207,20 +204,20 @@ export function Certifications() {
             )}
 
             <div className="flex items-start gap-4">
-              <div className="rounded-xl border border-[var(--status-gold-border)] bg-[var(--status-gold-bg)] p-3">
-                <Award className="h-6 w-6 text-[var(--gold-bright)]" />
+              <div className="clay-icon h-14 w-14 shrink-0">
+                <Award className="h-6 w-6" />
               </div>
               <div className="flex-1">
-                <p className="section-kicker">{ARCANE_LORE.certifications.modalTitle}</p>
-                <h2 className="display-font mt-3 text-4xl text-[var(--foreground)]">
+                <p className="section-kicker">Detail Sertifikasi</p>
+                <h2 className="display-font mt-3 text-4xl font-extrabold text-[var(--foreground)] dark:text-[var(--foreground)]">
                   {selectedCertification.title}
                 </h2>
-                <p className="mt-2 text-lg text-[var(--gold-bright)]">
+                <p className="mt-2 text-lg font-bold text-[var(--accent)] dark:text-[var(--accent)]">
                   {selectedCertification.issuer}
                 </p>
-                <div className="mt-4 flex flex-wrap gap-4 text-sm text-[var(--muted)]">
+                <div className="mt-4 flex flex-wrap gap-4 text-sm text-[var(--muted)] dark:text-[var(--muted)]">
                   <span className="inline-flex items-center gap-2">
-                    <CalendarRange className="h-4 w-4 text-[var(--mana)]" />
+                    <CalendarRange className="h-4 w-4 text-[var(--accent)]" />
                     Diterbitkan: {selectedCertification.date}
                   </span>
                   {selectedCertification.expiryDate && (
@@ -230,27 +227,27 @@ export function Certifications() {
               </div>
             </div>
 
-            <div className="ornament-line my-7" />
+            <div className="soft-divider my-7" />
 
             <div className="grid gap-7 lg:grid-cols-[1fr_0.8fr]">
               <div className="space-y-5">
-                <p className="text-sm leading-8 text-[var(--muted)]">
+                <p className="text-sm leading-8 text-[var(--muted)] dark:text-[var(--muted)]">
                   {selectedCertification.description}
                 </p>
 
                 {selectedCertification.credentialId && (
-                  <div className="parchment-surface p-5">
+                  <div className="clay-inset p-5">
                     <p className="section-kicker">ID Kredensial</p>
-                    <p className="mt-3 font-mono text-sm break-all text-[var(--foreground)]">
+                    <p className="mt-3 font-mono text-sm break-all text-[var(--foreground)] dark:text-[var(--foreground)]">
                       {selectedCertification.credentialId}
                     </p>
                   </div>
                 )}
 
                 {!credentialLink && selectedCertification.credentialUrl && (
-                  <div className="parchment-surface p-5">
+                  <div className="clay-inset p-5">
                     <p className="section-kicker">Kode Kredensial</p>
-                    <p className="mt-3 font-mono text-sm break-all text-[var(--foreground)]">
+                    <p className="mt-3 font-mono text-sm break-all text-[var(--foreground)] dark:text-[var(--foreground)]">
                       {selectedCertification.credentialUrl}
                     </p>
                   </div>
@@ -258,11 +255,11 @@ export function Certifications() {
               </div>
 
               {selectedCertification.skills && selectedCertification.skills.length > 0 && (
-                <div className="section-frame p-5">
+                <div className="clay-card p-5">
                   <p className="section-kicker">Skill Terkait</p>
                   <div className="mt-4 flex flex-wrap gap-2">
                     {selectedCertification.skills.map((skill) => (
-                      <span key={skill} className="arcane-chip">
+                      <span key={skill} className="clay-chip">
                         {skill}
                       </span>
                     ))}
@@ -277,10 +274,10 @@ export function Certifications() {
                   href={credentialLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="arcane-button"
+                  className="clay-button clay-button-primary"
                 >
                   <ExternalLink className="h-4 w-4" />
-                  {ARCANE_LORE.certifications.credentialCta}
+                  {UI_COPY.credentialCta}
                 </a>
               </div>
             )}

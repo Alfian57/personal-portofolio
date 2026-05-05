@@ -4,8 +4,9 @@ import { useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { ExternalLink, Trophy } from "lucide-react";
-import { ARCANE_LORE } from "@/constants/lore-content";
 import { PORTFOLIO_DATA } from "@/constants/portfolio-data";
+import { UI_COPY } from "@/constants/section-content";
+import { Clay3DAsset } from "@/components/ui/Clay3DAsset";
 import { Modal } from "@/components/ui/Modal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { fadeInUp, staggerContainer } from "@/lib/animations";
@@ -16,6 +17,11 @@ export function Achievements() {
 
   return (
     <section id="achievements" className="section-padding">
+      <Clay3DAsset
+        variant="badge"
+        delay="short"
+        className="bottom-[8%] left-4 hidden h-32 w-32 opacity-75 xl:block 2xl:left-[calc((100vw_-_80rem)/2_-_2rem)]"
+      />
       <div className="mx-auto max-w-7xl">
         <motion.div
           initial="initial"
@@ -25,51 +31,42 @@ export function Achievements() {
         >
           <SectionHeading section="achievements" />
 
-          <div className="grid gap-5 lg:grid-cols-3">
+          <div className="grid gap-4 lg:grid-cols-3">
             {PORTFOLIO_DATA.achievements.map((achievement, index) => (
               <motion.button
                 key={achievement.id}
                 type="button"
                 variants={fadeInUp}
                 onClick={() => setSelectedAchievement(achievement)}
-                className={`section-frame card-hover p-5 text-left sm:p-6 md:p-7 ${
-                  index === 0 ? "lg:col-span-2" : ""
-                }`}
+                className="clay-card card-hover p-5 text-left"
               >
-                <div className="pointer-events-none absolute top-2 right-2 h-28 w-28 opacity-[0.2]">
-                  <Image
-                    src="/isekai/victory-banner.svg"
-                    alt=""
-                    width={112}
-                    height={96}
-                    className="h-full w-full object-contain"
-                  />
-                </div>
                 <div className="flex items-start justify-between gap-4">
-                  <div className="rounded-xl border border-[var(--status-gold-border)] bg-[var(--status-gold-bg)] p-3">
-                    <Trophy className="h-6 w-6 text-[var(--gold-bright)]" />
+                  <div className="clay-icon h-12 w-12 shrink-0 rounded-[1.4rem]">
+                    <Trophy className="h-5 w-5" />
                   </div>
-                  <p className="text-xs font-bold tracking-[0.16em] text-[var(--mana)] uppercase">
+                  <p className="text-xs font-extrabold tracking-[0.14em] text-[var(--accent)] uppercase dark:text-[var(--accent)]">
                     Pencapaian 0{index + 1}
                   </p>
                 </div>
 
-                <h3 className="display-font mt-6 text-3xl text-[var(--foreground)]">
+                <h3 className="display-font mt-4 line-clamp-2 text-2xl font-extrabold text-[var(--foreground)] dark:text-[var(--foreground)]">
                   {achievement.title}
                 </h3>
-                <p className="mt-3 text-base text-[var(--gold-bright)]">{achievement.issuer}</p>
-                <p className="mt-2 text-sm tracking-[0.16em] text-[var(--mana)] uppercase">
+                <p className="mt-2 line-clamp-1 text-base font-bold text-[var(--accent)] dark:text-[var(--accent)]">
+                  {achievement.issuer}
+                </p>
+                <p className="mt-2 text-sm font-bold tracking-[0.14em] text-[var(--muted)] uppercase dark:text-[var(--muted)]">
                   {achievement.date}
                 </p>
 
-                <p className="mt-5 text-sm leading-8 text-[var(--muted)]">
+                <p className="mt-4 line-clamp-3 text-sm leading-6 text-[var(--muted)] dark:text-[var(--muted)]">
                   {achievement.description}
                 </p>
 
                 {achievement.tags && (
-                  <div className="mt-6 flex flex-wrap gap-2">
+                  <div className="mt-4 flex flex-wrap gap-2">
                     {achievement.tags.slice(0, 4).map((tag) => (
-                      <span key={tag} className="arcane-chip">
+                      <span key={tag} className="clay-chip">
                         {tag}
                       </span>
                     ))}
@@ -81,40 +78,31 @@ export function Achievements() {
         </motion.div>
       </div>
 
-      <Modal isOpen={!!selectedAchievement} onClose={() => setSelectedAchievement(null)}>
+      <Modal isOpen={!!selectedAchievement} onClose={() => setSelectedAchievement(null)} size="lg">
         {selectedAchievement && (
           <div className="p-6 md:p-8">
-            <div className="pointer-events-none absolute top-10 right-10 hidden h-36 w-36 opacity-[0.18] md:block">
-              <Image
-                src="/isekai/victory-banner.svg"
-                alt=""
-                width={144}
-                height={124}
-                className="h-full w-full object-contain"
-              />
-            </div>
             <div className="flex items-start gap-4">
-              <div className="rounded-xl border border-[var(--status-gold-border)] bg-[var(--status-gold-bg)] p-3">
-                <Trophy className="h-6 w-6 text-[var(--gold-bright)]" />
+              <div className="clay-icon h-14 w-14 shrink-0">
+                <Trophy className="h-6 w-6" />
               </div>
               <div className="flex-1">
-                <p className="section-kicker">{ARCANE_LORE.achievements.modalTitle}</p>
-                <h2 className="display-font mt-3 text-4xl text-[var(--foreground)]">
+                <p className="section-kicker">Detail Pencapaian</p>
+                <h2 className="display-font mt-3 text-4xl font-extrabold text-[var(--foreground)] dark:text-[var(--foreground)]">
                   {selectedAchievement.title}
                 </h2>
-                <p className="mt-2 text-lg text-[var(--gold-bright)]">
+                <p className="mt-2 text-lg font-bold text-[var(--accent)] dark:text-[var(--accent)]">
                   {selectedAchievement.issuer}
                 </p>
-                <p className="mt-3 text-sm font-bold tracking-[0.16em] text-[var(--mana)] uppercase">
+                <p className="mt-3 text-sm font-extrabold tracking-[0.14em] text-[var(--muted)] uppercase dark:text-[var(--muted)]">
                   {selectedAchievement.date}
                 </p>
               </div>
             </div>
 
-            <div className="ornament-line my-7" />
+            <div className="soft-divider my-7" />
 
             <div className="grid gap-7 lg:grid-cols-[1fr_0.8fr]">
-              <div className="space-y-4 text-sm leading-8 text-[var(--muted)]">
+              <div className="space-y-4 text-sm leading-8 text-[var(--muted)] dark:text-[var(--muted)]">
                 <p>{selectedAchievement.description}</p>
                 {selectedAchievement.detailedDescription && (
                   <p>{selectedAchievement.detailedDescription}</p>
@@ -122,11 +110,11 @@ export function Achievements() {
               </div>
 
               {selectedAchievement.tags && (
-                <div className="parchment-surface p-5">
+                <div className="clay-inset p-5">
                   <p className="section-kicker">Bukti Teknis</p>
                   <div className="mt-4 flex flex-wrap gap-2">
                     {selectedAchievement.tags.map((tag) => (
-                      <span key={tag} className="arcane-chip">
+                      <span key={tag} className="clay-chip">
                         {tag}
                       </span>
                     ))}
@@ -140,10 +128,7 @@ export function Achievements() {
                 <p className="section-kicker">Dokumentasi</p>
                 <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
                   {selectedAchievement.images.map((image, index) => (
-                    <div
-                      key={image}
-                      className="relative aspect-video overflow-hidden rounded-xl border border-[var(--image-border)]"
-                    >
+                    <div key={image} className="clay-inset relative aspect-video overflow-hidden">
                       <Image
                         src={image}
                         alt={`${selectedAchievement.title} ${index + 1}`}
@@ -162,10 +147,10 @@ export function Achievements() {
                   href={selectedAchievement.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="arcane-button"
+                  className="clay-button clay-button-primary"
                 >
                   <ExternalLink className="h-4 w-4" />
-                  {ARCANE_LORE.achievements.certificateCta}
+                  {UI_COPY.certificateCta}
                 </a>
               </div>
             )}
