@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { createPortal } from "react-dom";
 import { X } from "lucide-react";
@@ -13,6 +13,8 @@ interface ModalProps {
 }
 
 export function Modal({ isOpen, onClose, children, size = "lg" }: ModalProps) {
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+
   useEffect(() => {
     const handleEscape = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
@@ -24,12 +26,17 @@ export function Modal({ isOpen, onClose, children, size = "lg" }: ModalProps) {
       return;
     }
 
+    const previouslyFocusedElement =
+      document.activeElement instanceof HTMLElement ? document.activeElement : null;
+
     document.addEventListener("keydown", handleEscape);
     document.body.style.overflow = "hidden";
+    window.setTimeout(() => closeButtonRef.current?.focus(), 0);
 
     return () => {
       document.removeEventListener("keydown", handleEscape);
       document.body.style.overflow = "";
+      previouslyFocusedElement?.focus();
     };
   }, [isOpen, onClose]);
 
@@ -60,9 +67,11 @@ export function Modal({ isOpen, onClose, children, size = "lg" }: ModalProps) {
               onClick={(event) => event.stopPropagation()}
               role="dialog"
               aria-modal="true"
+              aria-label="Dialog detail portfolio"
               className={`clay-card clay-card-strong relative z-[1] max-h-[90vh] w-full overflow-hidden ${sizeClass}`}
             >
               <button
+                ref={closeButtonRef}
                 type="button"
                 onClick={onClose}
                 className="clay-icon absolute top-3 right-3 z-10 h-11 w-11 text-[var(--foreground)] dark:text-[var(--foreground)]"

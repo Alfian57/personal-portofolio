@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 
 const interactiveSelector = [
   "a",
@@ -92,10 +93,15 @@ export function CustomCursor() {
     };
   }, []);
 
-  return (
+  if (typeof document === "undefined") {
+    return null;
+  }
+
+  return createPortal(
     <>
       <div ref={ringRef} aria-hidden="true" className="custom-cursor-ring" />
       <div ref={dotRef} aria-hidden="true" className="custom-cursor-dot" />
-    </>
+    </>,
+    document.body
   );
 }

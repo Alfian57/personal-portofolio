@@ -8,6 +8,7 @@ import { PORTFOLIO_DATA } from "@/constants/portfolio-data";
 import { UI_COPY } from "@/constants/section-content";
 import { Clay3DAsset } from "@/components/ui/Clay3DAsset";
 import { Modal } from "@/components/ui/Modal";
+import { SectionShell } from "@/components/ui/SectionShell";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { fadeInUp, staggerContainer } from "@/lib/animations";
 import { Achievement } from "@/types/portfolio";
@@ -16,67 +17,69 @@ export function Achievements() {
   const [selectedAchievement, setSelectedAchievement] = useState<Achievement | null>(null);
 
   return (
-    <section id="achievements" className="section-padding">
-      <Clay3DAsset
-        variant="badge"
-        delay="short"
-        className="bottom-[8%] left-4 hidden h-32 w-32 opacity-75 xl:block 2xl:left-[calc((100vw_-_80rem)/2_-_2rem)]"
-      />
-      <div className="mx-auto max-w-7xl">
-        <motion.div
-          initial="initial"
-          whileInView="animate"
-          viewport={{ once: true, margin: "-80px" }}
-          variants={staggerContainer}
-        >
-          <SectionHeading section="achievements" />
+    <SectionShell
+      id="achievements"
+      asset={
+        <Clay3DAsset
+          variant="badge"
+          delay="short"
+          className="bottom-[8%] left-4 hidden h-32 w-32 opacity-75 xl:block 2xl:left-[calc((100vw_-_80rem)/2_-_2rem)]"
+        />
+      }
+    >
+      <motion.div
+        initial="initial"
+        whileInView="animate"
+        viewport={{ once: true, margin: "-80px" }}
+        variants={staggerContainer}
+      >
+        <SectionHeading section="achievements" />
 
-          <div className="grid gap-4 lg:grid-cols-3">
-            {PORTFOLIO_DATA.achievements.map((achievement, index) => (
-              <motion.button
-                key={achievement.id}
-                type="button"
-                variants={fadeInUp}
-                onClick={() => setSelectedAchievement(achievement)}
-                className="clay-card card-hover p-5 text-left"
-              >
-                <div className="flex items-start justify-between gap-4">
-                  <div className="clay-icon h-12 w-12 shrink-0 rounded-[1.4rem]">
-                    <Trophy className="h-5 w-5" />
-                  </div>
-                  <p className="text-xs font-extrabold tracking-[0.14em] text-[var(--accent)] uppercase dark:text-[var(--accent)]">
-                    Pencapaian 0{index + 1}
-                  </p>
+        <div className="grid gap-4 lg:grid-cols-3">
+          {PORTFOLIO_DATA.achievements.map((achievement, index) => (
+            <motion.button
+              key={achievement.id}
+              type="button"
+              variants={fadeInUp}
+              onClick={() => setSelectedAchievement(achievement)}
+              className="clay-card card-hover p-5 text-left"
+            >
+              <div className="flex items-start justify-between gap-4">
+                <div className="clay-icon h-12 w-12 shrink-0 rounded-[1.4rem]">
+                  <Trophy className="h-5 w-5" />
                 </div>
-
-                <h3 className="display-font mt-4 line-clamp-2 text-2xl font-extrabold text-[var(--foreground)] dark:text-[var(--foreground)]">
-                  {achievement.title}
-                </h3>
-                <p className="mt-2 line-clamp-1 text-base font-bold text-[var(--accent)] dark:text-[var(--accent)]">
-                  {achievement.issuer}
+                <p className="text-xs font-extrabold tracking-[0.14em] text-[var(--accent)] uppercase dark:text-[var(--accent)]">
+                  Pencapaian 0{index + 1}
                 </p>
-                <p className="mt-2 text-sm font-bold tracking-[0.14em] text-[var(--muted)] uppercase dark:text-[var(--muted)]">
-                  {achievement.date}
-                </p>
+              </div>
 
-                <p className="mt-4 line-clamp-3 text-sm leading-6 text-[var(--muted)] dark:text-[var(--muted)]">
-                  {achievement.description}
-                </p>
+              <h3 className="display-font mt-4 line-clamp-2 text-2xl font-extrabold text-[var(--foreground)] dark:text-[var(--foreground)]">
+                {achievement.title}
+              </h3>
+              <p className="mt-2 line-clamp-1 text-base font-bold text-[var(--accent)] dark:text-[var(--accent)]">
+                {achievement.issuer}
+              </p>
+              <p className="mt-2 text-sm font-bold tracking-[0.14em] text-[var(--muted)] uppercase dark:text-[var(--muted)]">
+                {achievement.date}
+              </p>
 
-                {achievement.tags && (
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {achievement.tags.slice(0, 4).map((tag) => (
-                      <span key={tag} className="clay-chip">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                )}
-              </motion.button>
-            ))}
-          </div>
-        </motion.div>
-      </div>
+              <p className="mt-4 line-clamp-3 text-sm leading-6 text-[var(--muted)] dark:text-[var(--muted)]">
+                {achievement.description}
+              </p>
+
+              {achievement.tags && (
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {achievement.tags.slice(0, 4).map((tag) => (
+                    <span key={tag} className="clay-chip">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </motion.button>
+          ))}
+        </div>
+      </motion.div>
 
       <Modal isOpen={!!selectedAchievement} onClose={() => setSelectedAchievement(null)} size="lg">
         {selectedAchievement && (
@@ -157,6 +160,6 @@ export function Achievements() {
           </div>
         )}
       </Modal>
-    </section>
+    </SectionShell>
   );
 }

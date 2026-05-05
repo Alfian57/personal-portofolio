@@ -17,6 +17,7 @@ import { UI_COPY } from "@/constants/section-content";
 import { Clay3DAsset } from "@/components/ui/Clay3DAsset";
 import { Modal } from "@/components/ui/Modal";
 import { Carousel } from "@/components/ui/Carousel";
+import { SectionShell } from "@/components/ui/SectionShell";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { fadeInUp, staggerContainer } from "@/lib/animations";
 import { Project } from "@/types/portfolio";
@@ -128,143 +129,145 @@ export function Projects() {
   const displayedProjects = [...featuredProjects, ...otherProjects];
 
   return (
-    <section id="projects" className="section-padding">
-      <Clay3DAsset
-        variant="workspace"
-        delay="long"
-        className="right-4 bottom-[7%] hidden h-32 w-32 opacity-70 xl:block 2xl:right-[calc((100vw_-_80rem)/2_-_2.5rem)]"
-      />
-      <div className="mx-auto max-w-7xl">
+    <SectionShell
+      id="projects"
+      asset={
+        <Clay3DAsset
+          variant="workspace"
+          delay="long"
+          className="right-4 bottom-[7%] hidden h-32 w-32 opacity-70 xl:block 2xl:right-[calc((100vw_-_80rem)/2_-_2.5rem)]"
+        />
+      }
+    >
+      <motion.div
+        initial="initial"
+        whileInView="animate"
+        viewport={{ once: true, margin: "-80px" }}
+        variants={staggerContainer}
+      >
+        <SectionHeading section="projects" />
+
         <motion.div
-          initial="initial"
-          whileInView="animate"
-          viewport={{ once: true, margin: "-80px" }}
-          variants={staggerContainer}
+          variants={fadeInUp}
+          className="hide-scrollbar mb-5 flex gap-2 overflow-x-auto pb-2"
         >
-          <SectionHeading section="projects" />
+          {filterOptions.map((option) => {
+            const isActive = selectedFilter === option.label;
 
-          <motion.div
-            variants={fadeInUp}
-            className="hide-scrollbar mb-5 flex gap-2 overflow-x-auto pb-2"
-          >
-            {filterOptions.map((option) => {
-              const isActive = selectedFilter === option.label;
-
-              return (
-                <button
-                  key={option.label}
-                  type="button"
-                  onClick={() => setSelectedFilter(option.label)}
-                  aria-pressed={isActive}
-                  className={`inline-flex shrink-0 items-center gap-2 rounded-full border px-3.5 py-2 text-sm font-bold transition-all duration-200 ${
-                    isActive
-                      ? "nav-pill-active"
-                      : "bg-[var(--surface)] text-[var(--muted)] shadow-[var(--clay-shadow-small)] hover:text-[var(--foreground)] dark:bg-[var(--surface)] dark:text-[var(--muted)]"
-                  }`}
-                >
-                  <span>{option.label}</span>
-                  <span className="rounded-full bg-white/35 px-2 py-0.5 text-[0.68rem] leading-none dark:bg-slate-950/20">
-                    {option.count}
-                  </span>
-                </button>
-              );
-            })}
-          </motion.div>
-
-          <AnimatePresence mode="wait">
-            {displayedProjects.length > 0 ? (
-              <motion.div
-                key={`grid-${selectedFilter}`}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.22 }}
-                className="grid gap-4 lg:grid-cols-2"
+            return (
+              <button
+                key={option.label}
+                type="button"
+                onClick={() => setSelectedFilter(option.label)}
+                aria-pressed={isActive}
+                className={`inline-flex shrink-0 items-center gap-2 rounded-full border px-3.5 py-2 text-sm font-bold transition-all duration-200 ${
+                  isActive
+                    ? "nav-pill-active"
+                    : "bg-[var(--surface)] text-[var(--muted)] shadow-[var(--clay-shadow-small)] hover:text-[var(--foreground)] dark:bg-[var(--surface)] dark:text-[var(--muted)]"
+                }`}
               >
-                {displayedProjects.map((project, index) => (
-                  <motion.button
-                    key={project.id}
-                    type="button"
-                    onClick={() => setSelectedProject(project)}
-                    initial={{ opacity: 0, y: 16 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.24, delay: Math.min(index * 0.04, 0.12) }}
-                    className="clay-card card-hover p-5 text-left md:p-6"
-                  >
-                    <div className="flex h-full flex-col">
-                      <div className="flex items-start justify-between gap-4">
-                        <ProjectVisual project={project} />
-                        <div className="min-w-0 flex-1">
-                          <p className="text-xs font-extrabold tracking-[0.14em] text-[var(--accent)] uppercase dark:text-[var(--accent)]">
-                            Studi Kasus 0{index + 1}
-                          </p>
-                          <h3 className="display-font mt-2 line-clamp-2 text-2xl leading-tight font-extrabold text-[var(--foreground)] dark:text-[var(--foreground)]">
-                            {project.title}
-                          </h3>
-                        </div>
-                        <span className="clay-chip shrink-0 text-[var(--accent)] dark:text-[var(--accent)]">
-                          {getStatusLabel(project.status)}
-                        </span>
-                      </div>
-
-                      {project.role && (
-                        <p className="mt-4 text-sm font-bold text-[var(--accent)] dark:text-[var(--accent)]">
-                          {project.role}
-                        </p>
-                      )}
-
-                      <p className="mt-3 line-clamp-3 text-sm leading-6 text-[var(--muted)] dark:text-[var(--muted)]">
-                        {project.description}
-                      </p>
-
-                      <div className="mt-4 flex flex-wrap gap-2">
-                        {project.technologies.slice(0, 4).map((tech) => (
-                          <span key={tech} className="clay-chip">
-                            {tech}
-                          </span>
-                        ))}
-                      </div>
-
-                      <div className="mt-auto pt-4">
-                        <span className="inline-flex items-center gap-2 text-sm font-extrabold text-[var(--accent)] dark:text-[var(--accent)]">
-                          Lihat studi kasus
-                          <ChevronRight className="h-4 w-4" />
-                        </span>
-                      </div>
-                    </div>
-                  </motion.button>
-                ))}
-              </motion.div>
-            ) : (
-              <motion.div
-                key={`empty-${selectedFilter}`}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.22 }}
-                className="clay-card p-6 text-center md:p-8"
-              >
-                <p className="section-kicker">Belum ada karya</p>
-                <h3 className="display-font mt-3 text-2xl font-extrabold text-[var(--foreground)] dark:text-[var(--foreground)]">
-                  Tidak ada karya untuk filter{" "}
-                  <span className="text-[var(--accent)]">{selectedFilter}</span>.
-                </h3>
-                <p className="mx-auto mt-3 max-w-xl text-sm leading-7 text-[var(--muted)] dark:text-[var(--muted)]">
-                  Pilih kategori lain atau kembali ke semua karya untuk melihat seluruh studi kasus
-                  yang tersedia.
-                </p>
-                <button
-                  type="button"
-                  onClick={() => setSelectedFilter(UI_COPY.all)}
-                  className="clay-button clay-button-secondary mt-5"
-                >
-                  Tampilkan Semua
-                </button>
-              </motion.div>
-            )}
-          </AnimatePresence>
+                <span>{option.label}</span>
+                <span className="rounded-full bg-white/35 px-2 py-0.5 text-[0.68rem] leading-none dark:bg-slate-950/20">
+                  {option.count}
+                </span>
+              </button>
+            );
+          })}
         </motion.div>
-      </div>
+
+        <AnimatePresence mode="wait">
+          {displayedProjects.length > 0 ? (
+            <motion.div
+              key={`grid-${selectedFilter}`}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.22 }}
+              className="grid gap-4 lg:grid-cols-2"
+            >
+              {displayedProjects.map((project, index) => (
+                <motion.button
+                  key={project.id}
+                  type="button"
+                  onClick={() => setSelectedProject(project)}
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.24, delay: Math.min(index * 0.04, 0.12) }}
+                  className="clay-card card-hover p-5 text-left md:p-6"
+                >
+                  <div className="flex h-full flex-col">
+                    <div className="flex items-start justify-between gap-4">
+                      <ProjectVisual project={project} />
+                      <div className="min-w-0 flex-1">
+                        <p className="text-xs font-extrabold tracking-[0.14em] text-[var(--accent)] uppercase dark:text-[var(--accent)]">
+                          Studi Kasus 0{index + 1}
+                        </p>
+                        <h3 className="display-font mt-2 line-clamp-2 text-2xl leading-tight font-extrabold text-[var(--foreground)] dark:text-[var(--foreground)]">
+                          {project.title}
+                        </h3>
+                      </div>
+                      <span className="clay-chip shrink-0 text-[var(--accent)] dark:text-[var(--accent)]">
+                        {getStatusLabel(project.status)}
+                      </span>
+                    </div>
+
+                    {project.role && (
+                      <p className="mt-4 text-sm font-bold text-[var(--accent)] dark:text-[var(--accent)]">
+                        {project.role}
+                      </p>
+                    )}
+
+                    <p className="mt-3 line-clamp-3 text-sm leading-6 text-[var(--muted)] dark:text-[var(--muted)]">
+                      {project.description}
+                    </p>
+
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      {project.technologies.slice(0, 4).map((tech) => (
+                        <span key={tech} className="clay-chip">
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+
+                    <div className="mt-auto pt-4">
+                      <span className="inline-flex items-center gap-2 text-sm font-extrabold text-[var(--accent)] dark:text-[var(--accent)]">
+                        Lihat studi kasus
+                        <ChevronRight className="h-4 w-4" />
+                      </span>
+                    </div>
+                  </div>
+                </motion.button>
+              ))}
+            </motion.div>
+          ) : (
+            <motion.div
+              key={`empty-${selectedFilter}`}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.22 }}
+              className="clay-card p-6 text-center md:p-8"
+            >
+              <p className="section-kicker">Belum ada karya</p>
+              <h3 className="display-font mt-3 text-2xl font-extrabold text-[var(--foreground)] dark:text-[var(--foreground)]">
+                Tidak ada karya untuk filter{" "}
+                <span className="text-[var(--accent)]">{selectedFilter}</span>.
+              </h3>
+              <p className="mx-auto mt-3 max-w-xl text-sm leading-7 text-[var(--muted)] dark:text-[var(--muted)]">
+                Pilih kategori lain atau kembali ke semua karya untuk melihat seluruh studi kasus
+                yang tersedia.
+              </p>
+              <button
+                type="button"
+                onClick={() => setSelectedFilter(UI_COPY.all)}
+                className="clay-button clay-button-secondary mt-5"
+              >
+                Tampilkan Semua
+              </button>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.div>
 
       <Modal isOpen={!!selectedProject} onClose={() => setSelectedProject(null)} size="xl">
         {selectedProject && (
@@ -393,6 +396,6 @@ export function Projects() {
           </div>
         )}
       </Modal>
-    </section>
+    </SectionShell>
   );
 }
