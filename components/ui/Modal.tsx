@@ -68,13 +68,13 @@ export function Modal({ isOpen, onClose, children, size = "lg" }: ModalProps) {
               role="dialog"
               aria-modal="true"
               aria-label="Dialog detail portfolio"
-              className={`clay-card clay-card-strong relative z-[1] max-h-[90vh] w-full overflow-hidden ${sizeClass}`}
+              className={`modal-panel editorial-panel relative z-[1] max-h-[90vh] w-full overflow-hidden ${sizeClass}`}
             >
               <button
                 ref={closeButtonRef}
                 type="button"
                 onClick={onClose}
-                className="clay-icon absolute top-3 right-3 z-10 h-11 w-11 text-[var(--foreground)] dark:text-[var(--foreground)]"
+                className="editorial-icon absolute top-3 right-3 z-10 h-11 w-11 text-[var(--foreground)] dark:text-[var(--foreground)]"
                 aria-label="Tutup modal"
               >
                 <X className="h-4 w-4" />

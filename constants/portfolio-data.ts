@@ -29,22 +29,22 @@ export const PORTFOLIO_DATA: PortfolioData = {
     },
   ],
   hero: {
-    greeting: "Halo, saya",
+    greeting: "Halo!",
     name: "Alfian Gading Saputra",
-    tagline: "Fullstack Developer yang berfokus pada Backend, API, dan Web Interface",
+    tagline: "Fullstack Developer",
     description:
-      "Saya membangun aplikasi web dengan fondasi backend yang rapi, aman, dan mudah dikembangkan. Stack utama saya meliputi Laravel, Go, SQL, Next.js, TypeScript, Docker, Linux, dan Tailwind CSS.",
+      "Saya membantu membangun aplikasi web dengan fondasi backend yang rapi, alur data yang jelas, dan antarmuka yang mudah digunakan. Stack utama saya meliputi Laravel, Go, SQL, Next.js, TypeScript, Docker, Linux, dan Tailwind CSS.",
     cta: {
-      primary: "Lihat Karya Terpilih",
-      secondary: "Hubungi Saya",
+      primary: "Lihat Studi Kasus",
+      secondary: "Diskusi Peluang",
     },
   },
   about: {
     title: "Profil",
     description: [
       "Saya adalah Fullstack Developer dengan fokus kuat pada backend, desain API, database, dan integrasi antarmuka. Saya terbiasa bekerja dengan Laravel, PHP, SQL, Linux, serta terus memperkuat Go, Next.js, dan TypeScript untuk membangun sistem web yang lebih modern.",
-      "Dalam pekerjaan, saya berusaha membuat alur data mudah dipahami, struktur kode tidak cepat rapuh, dan performa tetap diperhatikan sejak awal. Saya nyaman bergerak dari perancangan skema database, pembuatan endpoint, debugging flow aplikasi, sampai penyusunan UI yang rapi.",
-      "Saya menyusun portfolio ini agar recruiter dan tim teknis bisa cepat melihat fokus keahlian, pengalaman industri, pencapaian kompetitif, dan bukti kerja yang relevan.",
+      "Dalam pekerjaan, saya berusaha membuat alur data mudah dipahami, struktur kode tidak cepat rapuh, dan performa diperhatikan sejak awal. Saya nyaman bergerak dari perancangan skema database, pembuatan endpoint, penelusuran bug, sampai penyusunan UI yang rapi.",
+      "Saya menyusun portofolio ini agar perekrut dan tim teknis bisa cepat melihat fokus keahlian, pengalaman industri, pencapaian kompetitif, dan bukti kerja yang relevan.",
     ],
     skills: [
       "Golang",
@@ -67,8 +67,8 @@ export const PORTFOLIO_DATA: PortfolioData = {
       location: "Daerah Istimewa Yogyakarta, Indonesia",
       period: "September 2025 - Sekarang",
       description: [
-        "Membimbing 80+ mahasiswa dalam mata kuliah Jaringan Komputer & Komunikasi Data, memfasilitasi simulasi jaringan dan troubleshooting menggunakan Cisco Packet Tracer.",
-        "Mengajar logika pemrograman Python untuk mata kuliah Algoritma & Pemrograman Dasar, berfokus pada alur kontrol dan struktur data guna menghasilkan kode yang efisien.",
+        "Membimbing 80+ mahasiswa dalam mata kuliah Jaringan Komputer & Komunikasi Data, termasuk simulasi jaringan dan pemecahan masalah menggunakan Cisco Packet Tracer.",
+        "Mengajar logika pemrograman Python untuk mata kuliah Algoritma & Pemrograman Dasar, berfokus pada alur kontrol dan struktur data agar mahasiswa mampu menulis kode yang lebih terstruktur.",
       ],
       technologies: ["Cisco Packet Tracer", "Python"],
       type: "Contract",
@@ -81,9 +81,9 @@ export const PORTFOLIO_DATA: PortfolioData = {
       location: "Daerah Istimewa Yogyakarta, Indonesia",
       period: "Juli 2025 - Sekarang",
       description: [
-        "Merancang layanan backend yang skalabel menggunakan Laravel dengan fokus pada struktur code yang rapi dan desain API yang aman.",
+        "Merancang layanan backend yang skalabel menggunakan Laravel dengan fokus pada struktur kode yang rapi dan desain API yang aman.",
         "Menyusun skema database yang efisien serta mengoptimalkan query SQL untuk menangani relasi data yang kompleks.",
-        "Berkolaborasi dengan tim frontend untuk merumuskan spesifikasi API dan memastikan aliran data berjalan mulus di seluruh aplikasi.",
+        "Berkolaborasi dengan tim frontend untuk merumuskan spesifikasi API dan memastikan aliran data berjalan lancar di seluruh aplikasi.",
       ],
       technologies: ["PHP", "Laravel"],
       type: "Contract",
@@ -98,9 +98,9 @@ export const PORTFOLIO_DATA: PortfolioData = {
       description: [
         "Membangun dan menyesuaikan solusi content management berbasis WordPress dan Laravel agar sesuai dengan kebutuhan spesifik klien.",
         "Mengelola environment server berbasis Linux, termasuk deployment dasar dan konfigurasi untuk menjaga stabilitas layanan.",
-        "Mengoptimalkan query database dan script backend untuk meningkatkan kecepatan muat halaman serta performa sistem secara keseluruhan.",
+        "Mengoptimalkan query database dan skrip backend untuk meningkatkan kecepatan muat halaman serta performa sistem secara keseluruhan.",
       ],
-      technologies: ["PHP", "Laravel", "Wordpress", "Linux"],
+      technologies: ["PHP", "Laravel", "WordPress", "Linux"],
       type: "Internship",
       images: ["/experience/Seven-Inc-1.jpg", "/experience/Seven-Inc-2.jpg"],
     },
@@ -125,16 +125,16 @@ export const PORTFOLIO_DATA: PortfolioData = {
       id: "proj-1",
       title: "SIM PKM - Website PKM Internal UTY",
       description:
-        "Mengembangkan sistem manajemen dan penilaian proposal internal berbasis Laravel menggunakan arsitektur monorepo untuk program PKM UTY 2026. Membangun sistem otorisasi tiga peran (Student, Admin, Reviewer) dan logika penilaian yang terintegrasi guna memastikan efisiensi siklus pengajuan proposal.",
-      image: "/globe.svg",
+        "Mengembangkan sistem manajemen dan penilaian proposal internal berbasis Laravel menggunakan arsitektur monorepo untuk program PKM UTY 2026. Sistem ini mendukung otorisasi tiga peran, yaitu mahasiswa, admin, dan reviewer, serta logika penilaian yang terintegrasi untuk mempercepat siklus pengajuan proposal.",
+      image: "/editorial/project-sim-pkm.png",
       technologies: ["Laravel", "PHP"],
-      tags: ["Web Development", "Backend"],
+      tags: ["Pengembangan Web", "Backend"],
       role: "Backend Developer",
       context: "Program PKM Universitas Teknologi Yogyakarta, 2026.",
       highlights: [
-        "Merancang sistem manajemen proposal dengan role-based access control (RBAC).",
-        "Membangun logika penilaian otomatis untuk mengoptimalkan siklus review proposal.",
-        "Mengimplementasikan arsitektur monorepo untuk skalabilitas dan maintenance yang lebih baik.",
+        "Merancang sistem manajemen proposal dengan kontrol akses berbasis peran (RBAC).",
+        "Membangun logika penilaian otomatis untuk mengoptimalkan siklus tinjauan proposal.",
+        "Mengimplementasikan arsitektur monorepo agar pengembangan dan pemeliharaan lebih terstruktur.",
       ],
       outcome:
         "Sistem yang efisien dalam mengelola dan menilai proposal PKM UTY dengan proses yang terstruktur dan aman.",
@@ -145,19 +145,19 @@ export const PORTFOLIO_DATA: PortfolioData = {
       id: "proj-2",
       title: "Panca Trivia - Website Edukasi Pancasila",
       description:
-        "Membangun aplikasi web edukatif berbasis Laravel menggunakan konsep gamification untuk memfasilitasi pembelajaran nilai-nilai Pancasila. Mengimplementasikan fitur kuis interaktif dan sistem leveling untuk menciptakan pengalaman belajar yang dinamis dan terukur.",
-      image: "/globe.svg",
-      technologies: ["Laravel", "PHP", "JavaScript", "Gamification", "Database Design"],
-      tags: ["Edukasi", "Web Development", "Full Stack"],
-      role: "Full Stack Developer",
+        "Membangun aplikasi web edukatif berbasis Laravel dengan konsep gamification untuk mendukung pembelajaran nilai-nilai Pancasila. Fitur kuis interaktif dan sistem level dirancang agar proses belajar lebih terarah, terukur, dan menarik.",
+      image: "/editorial/project-panca-trivia-mockup.png",
+      technologies: ["Laravel", "PHP", "JavaScript", "Gamification", "Desain Database"],
+      tags: ["Edukasi", "Pengembangan Web", "Fullstack"],
+      role: "Fullstack Developer",
       context: "Proyek pengembangan aplikasi edukatif untuk pembelajaran Pancasila.",
       highlights: [
-        "Mengdesain sistem gamification dengan fitur points, badges, dan leaderboard.",
-        "Membangun fitur kuis interaktif dengan feedback real-time.",
-        "Mengimplementasikan sistem leveling yang progresif untuk engagement pengguna.",
+        "Merancang sistem gamification dengan fitur poin, badge, dan leaderboard.",
+        "Membangun fitur kuis interaktif dengan umpan balik real-time.",
+        "Mengimplementasikan sistem level progresif untuk menjaga keterlibatan pengguna.",
       ],
       outcome:
-        "Platform edukatif yang engaging dan interaktif untuk membantu pembelajaran nilai-nilai Pancasila melalui gamification.",
+        "Platform edukatif yang interaktif untuk membantu pembelajaran nilai-nilai Pancasila melalui gamification.",
       images: [],
       featured: true,
     },
@@ -170,7 +170,7 @@ export const PORTFOLIO_DATA: PortfolioData = {
       location: "Daerah Istimewa Yogyakarta, Indonesia",
       period: "2023 - Sekarang",
       description:
-        "Sedang memperdalam pengetahuan di bidang struktur data, algoritma, dan arsitektur sistem. Secara aktif menjembatani teori akademik dengan standar industri melalui penerapan prinsip software engineering di proyek nyata bersama UTY Software House.",
+        "Sedang memperdalam pengetahuan di bidang struktur data, algoritma, dan arsitektur sistem. Secara aktif menjembatani teori akademik dengan standar industri melalui penerapan prinsip rekayasa perangkat lunak di proyek nyata bersama UTY Software House.",
     },
     {
       id: "edu-2",
@@ -179,7 +179,7 @@ export const PORTFOLIO_DATA: PortfolioData = {
       location: "Daerah Istimewa Yogyakarta, Indonesia",
       period: "2020 - 2023",
       description:
-        "Membangun fondasi kuat pada pengembangan web, manajemen database, dan Object-Oriented Programming. Mendapat pengalaman implementasi full-stack melalui pembelajaran vokasi dan magang industri.",
+        "Membangun fondasi kuat pada pengembangan web, manajemen database, dan pemrograman berorientasi objek. Mendapat pengalaman implementasi fullstack melalui pembelajaran vokasi dan magang industri.",
     },
   ],
   achievements: [
@@ -191,8 +191,8 @@ export const PORTFOLIO_DATA: PortfolioData = {
       description:
         "Meraih juara 2 pada kompetisi vokasi bergengsi IT Software Solutions for Business tingkat Provinsi DIY.",
       detailedDescription:
-        "Mengembangkan ekosistem software yang komprehensif dalam batas waktu yang ketat. Proyek ini mencakup aplikasi Desktop Point of Sales berbasis C# .NET untuk manajemen ritel serta aplikasi Cloud Storage berbasis Android menggunakan Java, yang menunjukkan kemampuan kuat dalam file handling dan sinkronisasi API.",
-      tags: ["C# .NET", "Java Android", "Desktop App", "Integrasi Sistem"],
+        "Mengembangkan rangkaian perangkat lunak dalam batas waktu yang ketat. Proyek ini mencakup aplikasi desktop Point of Sales berbasis C# .NET untuk manajemen ritel serta aplikasi Cloud Storage berbasis Android menggunakan Java, dengan fokus pada pengelolaan file dan sinkronisasi API.",
+      tags: ["C# .NET", "Java Android", "Aplikasi Desktop", "Integrasi Sistem"],
       images: ["/achivement/LKS-1.jpeg", "/achivement/LKS-2.jpeg", "/achivement/LKS-3.jpeg"],
       link: "/achivement/LKS-Cert.jpg",
     },
@@ -204,8 +204,8 @@ export const PORTFOLIO_DATA: PortfolioData = {
       description:
         "Meraih peringkat 3 tingkat nasional setelah bersaing dengan talenta terbaik dari 34 provinsi Indonesia di bidang IT Software Solutions for Business.",
       detailedDescription:
-        "Membangun solusi bisnis terintegrasi yang menggabungkan modul Desktop, Web, dan Mobile. Kompetisi ini membuktikan penguasaan C# .NET dan Java dalam menyelesaikan problem business logic yang kompleks serta menghasilkan sistem yang fault-tolerant di bawah tekanan kompetisi nasional.",
-      tags: ["Penghargaan Nasional", "C# .NET", "Java", "Fullstack Engineering"],
+        "Membangun solusi bisnis terintegrasi yang menggabungkan modul desktop, web, dan mobile. Kompetisi ini menunjukkan kemampuan menggunakan C# .NET dan Java untuk menyelesaikan logika bisnis yang kompleks di bawah tekanan waktu.",
+      tags: ["Penghargaan Nasional", "C# .NET", "Java", "Rekayasa Fullstack"],
       images: ["/achivement/LKSN-1.jpeg", "/achivement/LKSN-2.jpeg", "/achivement/LKSN-3.jpeg"],
       link: "/achivement/LKSN-Cert.jpg",
     },
@@ -217,7 +217,7 @@ export const PORTFOLIO_DATA: PortfolioData = {
       description:
         "Menerima pendanaan hibah riset untuk proyek PKM-KC 'SINDIKAT', sebuah karya inovatif yang memanfaatkan Deep Learning untuk kebutuhan keamanan.",
       detailedDescription:
-        "Berperan sebagai Lead Backend Developer untuk 'SINDIKAT: Sistem Multi Device Pendeteksi Tindakan Kriminal Menggunakan Deep Learning'. Bertanggung jawab merancang RESTful API yang memproses alert real-time dari model AI serta mengelola aliran data antara berbagai device endpoint dan dashboard pusat.",
+        "Berperan sebagai Lead Backend Developer untuk 'SINDIKAT: Sistem Multi Device Pendeteksi Tindakan Kriminal Menggunakan Deep Learning'. Bertanggung jawab merancang RESTful API yang memproses peringatan real-time dari model AI serta mengelola aliran data antara beberapa endpoint perangkat dan dashboard pusat.",
       tags: ["PKM-KC", "Integrasi AI", "Arsitektur Backend", "Deep Learning"],
       images: [],
       link: "/achivement/PKM-Cert.jpg",
@@ -230,10 +230,10 @@ export const PORTFOLIO_DATA: PortfolioData = {
       issuer: "Badan Nasional Sertifikasi Profesi (BNSP)",
       date: "Januari 2023",
       description:
-        "Sertifikasi nasional kompetensi web development level junior yang diterbitkan oleh BNSP.",
+        "Sertifikasi nasional kompetensi pengembangan web tingkat junior yang diterbitkan oleh BNSP.",
       credentialId: "TIK 1565 00100 2023",
       image: "/certificate/junior-web-dev.jpg",
-      skills: ["Web Development", "PHP", "Laravel", "JavaScript"],
+      skills: ["Pengembangan Web", "PHP", "Laravel", "JavaScript"],
       expiryDate: "Januari 2026",
     },
     {
@@ -245,7 +245,7 @@ export const PORTFOLIO_DATA: PortfolioData = {
         "Sertifikat kompetensi profesional yang diberikan oleh PT. Global Intermedia Nusantara.",
       credentialId: "NO. 422/0562",
       image: "/certificate/certificate-of-competence.jpg",
-      skills: ["Web Development", "PHP", "Laravel", "JavaScript"],
+      skills: ["Pengembangan Web", "PHP", "Laravel", "JavaScript"],
     },
     {
       id: "cert-3",
@@ -256,7 +256,7 @@ export const PORTFOLIO_DATA: PortfolioData = {
         "Sertifikat TOEIC untuk kompetensi bahasa Inggris pada kemampuan listening dan reading.",
       credentialId: "0045453942",
       image: "/certificate/toeic.jpg",
-      skills: ["English", "TOEIC"],
+      skills: ["Bahasa Inggris", "TOEIC"],
       expiryDate: "Agustus 2025",
     },
     {
@@ -287,14 +287,14 @@ export const PORTFOLIO_DATA: PortfolioData = {
       description: "Pengantar dasar jaringan komputer dari Dicoding.",
       credentialId: "72ZD8R7E6ZYW",
       image: "/certificate/dicoding-jaringan-komputer-untuk-pemula.jpg",
-      skills: ["Networking"],
+      skills: ["Jaringan"],
     },
     {
       id: "cert-7",
       title: "Dicoding - Cloud Practitioner Essentials",
       issuer: "Dicoding",
       date: "Agustus 2023",
-      description: "Dasar-dasar cloud computing dari Dicoding.",
+      description: "Dasar-dasar komputasi cloud dari Dicoding.",
       credentialId: "N9ZO61288XG5",
       image: "/certificate/dicoding_cloud-practitioner-essentials.jpg",
       skills: ["Cloud", "AWS"],
@@ -317,7 +317,7 @@ export const PORTFOLIO_DATA: PortfolioData = {
       description: "Dasar-dasar manajemen proyek TI dari Dicoding.",
       credentialId: "07Z689G4MXQR",
       image: "/certificate/dicoding_dasar-manajemen-proyek.jpg",
-      skills: ["Project Management"],
+      skills: ["Manajemen Proyek"],
     },
     {
       id: "cert-10",
@@ -337,7 +337,7 @@ export const PORTFOLIO_DATA: PortfolioData = {
       description: "Dasar pemrograman untuk menjadi pengembang software dari Dicoding.",
       credentialId: "EYX4YN9VJZDL",
       image: "/certificate/dicoding_dasar-pemrograman-untuk-menjadi-pengembang-software.jpg",
-      skills: ["Programming"],
+      skills: ["Pemrograman"],
     },
     {
       id: "cert-12",
@@ -401,9 +401,18 @@ export const PORTFOLIO_DATA: PortfolioData = {
     },
   ],
   contact: {
-    title: "Mari Diskusikan Peluang Kerja atau Kolaborasi",
+    title: "tentang ide atau kebutuhan teknis Anda",
     description:
-      "Saya terbuka untuk peran fullstack/backend, kolaborasi produk, dan proyek web yang membutuhkan struktur sistem yang kuat serta interface yang jelas.",
+      "Saya siap berdiskusi untuk peran fullstack/backend, kolaborasi produk, atau proyek web yang membutuhkan struktur sistem kuat dan antarmuka yang jelas.",
     email: "alfiangadingsaputra@gmail.com",
+    interests: [
+      "Backend API",
+      "Fullstack Web",
+      "Laravel",
+      "Go",
+      "Next.js",
+      "Database",
+      "Deployment",
+    ],
   },
 };

@@ -96,6 +96,7 @@ export interface ContactData {
   title: string;
   description: string;
   email: string;
+  interests?: string[];
 }
 
 export interface PortfolioData {

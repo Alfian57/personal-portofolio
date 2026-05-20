@@ -6,14 +6,13 @@ import { motion } from "framer-motion";
 import { Award, CalendarRange, ExternalLink, Layers3, Search } from "lucide-react";
 import { PORTFOLIO_DATA } from "@/constants/portfolio-data";
 import { UI_COPY } from "@/constants/section-content";
-import { Clay3DAsset } from "@/components/ui/Clay3DAsset";
 import { Modal } from "@/components/ui/Modal";
 import { SectionShell } from "@/components/ui/SectionShell";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { fadeInUp, staggerContainer } from "@/lib/animations";
 import { Certification } from "@/types/portfolio";
 
-const previewLimit = 8;
+const previewLimit = 10;
 
 export function Certifications() {
   const [selectedCertification, setSelectedCertification] = useState<Certification | null>(null);
@@ -61,16 +60,7 @@ export function Certifications() {
     : undefined;
 
   return (
-    <SectionShell
-      id="certifications"
-      asset={
-        <Clay3DAsset
-          variant="badge"
-          delay="long"
-          className="top-[13%] right-4 hidden h-28 w-28 opacity-70 xl:block 2xl:right-[calc((100vw_-_80rem)/2_-_2rem)]"
-        />
-      }
-    >
+    <SectionShell id="certifications">
       <motion.div
         initial="initial"
         whileInView="animate"
@@ -80,9 +70,9 @@ export function Certifications() {
         <SectionHeading section="certifications" />
 
         <div className="grid gap-4 lg:grid-cols-[0.72fr_1.28fr]">
-          <motion.aside variants={fadeInUp} className="clay-card p-4 sm:p-5">
+          <motion.aside variants={fadeInUp} className="editorial-card p-4 sm:p-5">
             <div className="flex items-start gap-4">
-              <div className="clay-icon h-12 w-12 shrink-0 rounded-[1.4rem]">
+              <div className="editorial-icon h-12 w-12 shrink-0 rounded-[1.4rem]">
                 <Layers3 className="h-6 w-6" />
               </div>
               <div>
@@ -104,12 +94,12 @@ export function Certifications() {
               {issuerStats.slice(0, 5).map(([issuer, count]) => (
                 <div
                   key={issuer}
-                  className="clay-inset flex items-center justify-between gap-3 px-3 py-2"
+                  className="cert-issuer-row editorial-inset flex items-center justify-between gap-3 px-3 py-2"
                 >
-                  <span className="truncate text-sm font-bold text-[var(--foreground)] dark:text-[var(--foreground)]">
+                  <span className="cert-issuer-name text-sm font-bold text-[var(--foreground)] dark:text-[var(--foreground)]">
                     {issuer}
                   </span>
-                  <span className="clay-chip shrink-0 px-2.5 py-1 text-xs">{count}</span>
+                  <span className="editorial-chip shrink-0 px-2.5 py-1 text-xs">{count}</span>
                 </div>
               ))}
             </div>
@@ -117,7 +107,7 @@ export function Certifications() {
             <button
               type="button"
               onClick={() => setShowDirectory(true)}
-              className="clay-button clay-button-primary mt-4 w-full"
+              className="editorial-button editorial-button-primary mt-4 w-full"
             >
               Lihat Semua Sertifikasi
             </button>
@@ -129,9 +119,9 @@ export function Certifications() {
                 key={certification.id}
                 type="button"
                 onClick={() => setSelectedCertification(certification)}
-                className="clay-card card-hover flex items-center gap-3 p-3 text-left"
+                className="editorial-card card-hover flex items-center gap-3 p-3 text-left"
               >
-                <div className="clay-icon h-11 w-11 shrink-0 rounded-[1.15rem]">
+                <div className="editorial-icon h-11 w-11 shrink-0 rounded-[1.15rem]">
                   <Award className="h-5 w-5" />
                 </div>
 
@@ -159,7 +149,7 @@ export function Certifications() {
               <button
                 type="button"
                 onClick={() => setShowDirectory(true)}
-                className="clay-card card-hover flex items-center justify-center p-4 text-center sm:col-span-2"
+                className="editorial-card card-hover flex items-center justify-center p-4 text-center sm:col-span-2"
               >
                 <span className="text-sm font-extrabold text-[var(--accent)] dark:text-[var(--accent)]">
                   +{hiddenCount} sertifikasi lainnya
@@ -171,7 +161,7 @@ export function Certifications() {
       </motion.div>
 
       <Modal isOpen={showDirectory} onClose={() => setShowDirectory(false)} size="xl">
-        <div className="p-6 md:p-8">
+        <div className="cert-modal-content p-6 md:p-8">
           <p className="section-kicker">Direktori Sertifikasi</p>
           <div className="mt-3 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
             <div>
@@ -190,14 +180,14 @@ export function Certifications() {
                 setDirectorySearch("");
                 setSelectedIssuer(UI_COPY.allIssuers);
               }}
-              className="clay-button clay-button-secondary w-fit"
+              className="editorial-button editorial-button-secondary w-fit"
             >
               Reset Filter
             </button>
           </div>
 
           <div className="mt-5 grid gap-3 lg:grid-cols-[minmax(0,1fr)_minmax(16rem,0.45fr)]">
-            <label className="clay-inset flex items-center gap-3 px-4 py-3">
+            <label className="editorial-inset flex items-center gap-3 px-4 py-3">
               <Search className="h-4 w-4 shrink-0 text-[var(--accent)]" />
               <span className="sr-only">Cari sertifikasi</span>
               <input
@@ -211,7 +201,7 @@ export function Certifications() {
             <select
               value={selectedIssuer}
               onChange={(event) => setSelectedIssuer(event.target.value)}
-              className="clay-inset min-h-12 w-full px-4 py-3 text-sm font-bold text-[var(--foreground)] outline-none dark:text-[var(--foreground)]"
+              className="editorial-inset min-h-12 w-full px-4 py-3 text-sm font-bold text-[var(--foreground)] outline-none dark:text-[var(--foreground)]"
               aria-label="Filter penerbit sertifikasi"
             >
               <option>{UI_COPY.allIssuers}</option>
@@ -231,9 +221,9 @@ export function Certifications() {
                     setShowDirectory(false);
                     setSelectedCertification(certification);
                   }}
-                  className="clay-inset flex items-center gap-3 p-3 text-left transition-transform duration-200 hover:-translate-y-0.5"
+                  className="editorial-inset flex items-center gap-3 p-3 text-left transition-transform duration-200 hover:-translate-y-0.5"
                 >
-                  <div className="clay-icon h-11 w-11 shrink-0 rounded-[1.15rem]">
+                  <div className="editorial-icon h-11 w-11 shrink-0 rounded-[1.15rem]">
                     <Award className="h-5 w-5" />
                   </div>
                   <div className="min-w-0 flex-1">
@@ -252,7 +242,7 @@ export function Certifications() {
                 </button>
               ))
             ) : (
-              <div className="clay-inset p-5 text-center md:col-span-2">
+              <div className="editorial-inset p-5 text-center md:col-span-2">
                 <p className="font-extrabold text-[var(--foreground)] dark:text-[var(--foreground)]">
                   Tidak ada sertifikasi yang cocok.
                 </p>
@@ -271,9 +261,9 @@ export function Certifications() {
         size="lg"
       >
         {selectedCertification && (
-          <div className="p-6 md:p-8">
+          <div className="cert-modal-content p-6 md:p-8">
             {selectedCertification.image && (
-              <div className="clay-inset relative mb-7 h-64 overflow-hidden">
+              <div className="editorial-inset relative mb-7 h-64 overflow-hidden">
                 <Image
                   src={selectedCertification.image}
                   alt={selectedCertification.title}
@@ -284,19 +274,19 @@ export function Certifications() {
               </div>
             )}
 
-            <div className="flex items-start gap-4">
-              <div className="clay-icon h-14 w-14 shrink-0">
+            <div className="cert-detail-header flex items-start gap-4">
+              <div className="cert-detail-icon editorial-icon h-14 w-14 shrink-0">
                 <Award className="h-6 w-6" />
               </div>
-              <div className="flex-1">
+              <div className="min-w-0 flex-1">
                 <p className="section-kicker">Detail Sertifikasi</p>
-                <h2 className="display-font mt-3 text-4xl font-extrabold text-[var(--foreground)] dark:text-[var(--foreground)]">
+                <h2 className="cert-detail-title display-font mt-3 text-4xl font-extrabold text-[var(--foreground)] dark:text-[var(--foreground)]">
                   {selectedCertification.title}
                 </h2>
-                <p className="mt-2 text-lg font-bold text-[var(--accent)] dark:text-[var(--accent)]">
+                <p className="cert-detail-issuer mt-2 text-lg font-bold text-[var(--accent)] dark:text-[var(--accent)]">
                   {selectedCertification.issuer}
                 </p>
-                <div className="mt-4 flex flex-wrap gap-4 text-sm text-[var(--muted)] dark:text-[var(--muted)]">
+                <div className="cert-detail-meta mt-4 flex flex-wrap gap-4 text-sm text-[var(--muted)] dark:text-[var(--muted)]">
                   <span className="inline-flex items-center gap-2">
                     <CalendarRange className="h-4 w-4 text-[var(--accent)]" />
                     Diterbitkan: {selectedCertification.date}
@@ -317,7 +307,7 @@ export function Certifications() {
                 </p>
 
                 {selectedCertification.credentialId && (
-                  <div className="clay-inset p-5">
+                  <div className="editorial-inset p-5">
                     <p className="section-kicker">ID Kredensial</p>
                     <p className="mt-3 font-mono text-sm break-all text-[var(--foreground)] dark:text-[var(--foreground)]">
                       {selectedCertification.credentialId}
@@ -326,7 +316,7 @@ export function Certifications() {
                 )}
 
                 {!credentialLink && selectedCertification.credentialUrl && (
-                  <div className="clay-inset p-5">
+                  <div className="editorial-inset p-5">
                     <p className="section-kicker">Kode Kredensial</p>
                     <p className="mt-3 font-mono text-sm break-all text-[var(--foreground)] dark:text-[var(--foreground)]">
                       {selectedCertification.credentialUrl}
@@ -336,11 +326,11 @@ export function Certifications() {
               </div>
 
               {selectedCertification.skills && selectedCertification.skills.length > 0 && (
-                <div className="clay-card p-5">
+                <div className="editorial-card p-5">
                   <p className="section-kicker">Skill Terkait</p>
                   <div className="mt-4 flex flex-wrap gap-2">
                     {selectedCertification.skills.map((skill) => (
-                      <span key={skill} className="clay-chip">
+                      <span key={skill} className="editorial-chip">
                         {skill}
                       </span>
                     ))}
@@ -355,7 +345,7 @@ export function Certifications() {
                   href={credentialLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="clay-button clay-button-primary"
+                  className="editorial-button editorial-button-primary"
                 >
                   <ExternalLink className="h-4 w-4" />
                   {UI_COPY.credentialCta}

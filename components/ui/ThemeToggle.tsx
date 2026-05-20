@@ -45,7 +45,7 @@ export function ThemeToggle() {
     <button
       type="button"
       onClick={cycleTheme}
-      className="clay-icon h-11 w-11 text-[var(--foreground)] dark:text-[var(--foreground)]"
+      className="editorial-icon h-11 w-11 text-[var(--foreground)] dark:text-[var(--foreground)]"
       aria-label={`${label}. Klik untuk mengganti tema.`}
       title={label}
     >

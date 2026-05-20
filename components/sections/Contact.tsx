@@ -1,88 +1,115 @@
 "use client";
 
+import { FormEvent, useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, MessageSquare, Send } from "lucide-react";
+import { ArrowRight, Mail, Send } from "lucide-react";
 import { PORTFOLIO_DATA } from "@/constants/portfolio-data";
-import { Clay3DAsset } from "@/components/ui/Clay3DAsset";
 import { SectionShell } from "@/components/ui/SectionShell";
-import { SectionHeading } from "@/components/ui/SectionHeading";
 import { fadeInUp, staggerContainer } from "@/lib/animations";
 
 export function Contact() {
+  const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
+  const interests = PORTFOLIO_DATA.contact.interests ?? [];
+
+  const baseEmailHref = useMemo(() => {
+    const subject = encodeURIComponent("Peluang Backend/Fullstack - Alfian");
+    return `mailto:${PORTFOLIO_DATA.contact.email}?subject=${subject}`;
+  }, []);
+
+  const toggleInterest = (interest: string) => {
+    setSelectedInterests((current) =>
+      current.includes(interest)
+        ? current.filter((item) => item !== interest)
+        : [...current, interest]
+    );
+  };
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const formData = new FormData(event.currentTarget);
+    const body = [
+      `Nama: ${formData.get("name") ?? ""}`,
+      `Email: ${formData.get("email") ?? ""}`,
+      `Perusahaan: ${formData.get("company") ?? ""}`,
+      `Minat: ${selectedInterests.join(", ") || "-"}`,
+      "",
+      String(formData.get("message") ?? ""),
+    ].join("\n");
+
+    window.location.href = `${baseEmailHref}&body=${encodeURIComponent(body)}`;
+  };
+
   return (
-    <SectionShell
-      id="contact"
-      maxWidth="6xl"
-      asset={
-        <Clay3DAsset
-          variant="message"
-          delay="medium"
-          className="right-4 bottom-[10%] hidden h-32 w-32 opacity-80 lg:block xl:right-8 2xl:right-[calc((100vw_-_72rem)/2_-_1.5rem)]"
-        />
-      }
-    >
+    <SectionShell id="contact" className="white-section contact-section" maxWidth="6xl">
       <motion.div
         initial="initial"
         whileInView="animate"
         viewport={{ once: true, margin: "-80px" }}
         variants={staggerContainer}
       >
-        <SectionHeading section="contact" align="center" />
-
-        <motion.div variants={fadeInUp} className="clay-card clay-card-strong p-5 sm:p-6 md:p-8">
-          <div className="grid gap-7 lg:grid-cols-[1fr_0.8fr] lg:items-center">
-            <div>
-              <div className="flex items-center gap-3">
-                <div className="clay-icon h-11 w-11 rounded-[1.25rem]">
-                  <MessageSquare className="h-5 w-5" />
-                </div>
-                <p className="section-kicker">Diskusi Peluang</p>
-              </div>
-              <h3 className="display-font mt-4 max-w-2xl text-3xl leading-tight font-extrabold text-[var(--foreground)] md:text-4xl dark:text-[var(--foreground)]">
-                {PORTFOLIO_DATA.contact.title}
-              </h3>
-              <p className="mt-4 max-w-2xl text-sm leading-7 text-[var(--muted)] sm:text-base dark:text-[var(--muted)]">
-                {PORTFOLIO_DATA.contact.description}
-              </p>
-              <p className="mt-4 text-sm leading-7 text-[var(--muted-strong)] dark:text-[var(--muted-strong)]">
-                Cara tercepat menghubungi saya adalah melalui email atau LinkedIn.
-              </p>
-            </div>
-
-            <div>
-              <a
-                href={`mailto:${PORTFOLIO_DATA.contact.email}`}
-                className="clay-button clay-button-primary w-full"
-              >
-                <Mail className="h-4 w-4" />
-                {PORTFOLIO_DATA.contact.email}
-              </a>
-
-              <div className="mt-4 grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
-                {PORTFOLIO_DATA.socials.map((social) => {
-                  const Icon = social.icon;
-                  const isMail = social.href.startsWith("mailto:");
-
-                  return (
-                    <a
-                      key={social.label}
-                      href={social.href}
-                      target={isMail ? undefined : "_blank"}
-                      rel={isMail ? undefined : "noopener noreferrer"}
-                      className="clay-inset flex items-center justify-between gap-3 px-4 py-3 text-sm font-bold text-[var(--foreground)] transition-transform duration-200 hover:-translate-y-0.5 dark:text-[var(--foreground)]"
-                    >
-                      <span className="inline-flex items-center gap-3">
-                        <Icon className="h-5 w-5 text-[var(--accent)]" />
-                        {social.label}
-                      </span>
-                      <Send className="h-4 w-4 text-[var(--accent)]" />
-                    </a>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
+        <motion.div variants={fadeInUp} className="contact-heading">
+          <h2>
+            <span>Mari Berdiskusi</span> {PORTFOLIO_DATA.contact.title}
+          </h2>
+          <ArrowRight className="h-10 w-10" />
+          <p>{PORTFOLIO_DATA.contact.description}</p>
         </motion.div>
+
+        <motion.form variants={fadeInUp} onSubmit={handleSubmit} className="contact-form">
+          <div className="form-grid">
+            <label>
+              <span>Nama *</span>
+              <input name="name" placeholder="Halo..." required />
+            </label>
+            <label>
+              <span>Email *</span>
+              <input name="email" type="email" placeholder="Ke mana saya bisa membalas?" required />
+            </label>
+          </div>
+
+          <label>
+            <span>Perusahaan atau organisasi</span>
+            <input name="company" placeholder="Nama perusahaan, organisasi, atau website" />
+          </label>
+
+          <label>
+            <span>Apa yang ingin dibahas? *</span>
+            <textarea
+              name="message"
+              placeholder="Ceritakan kebutuhan, timeline, atau peran yang ingin didiskusikan..."
+              required
+            />
+          </label>
+
+          <div className="interest-group" aria-label="Minat">
+            {interests.map((interest) => {
+              const active = selectedInterests.includes(interest);
+
+              return (
+                <button
+                  key={interest}
+                  type="button"
+                  onClick={() => toggleInterest(interest)}
+                  className={active ? "is-active" : ""}
+                >
+                  {interest}
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="contact-submit-row">
+            <a href={baseEmailHref} className="text-action">
+              <Mail className="h-4 w-4" />
+              {PORTFOLIO_DATA.contact.email}
+            </a>
+            <button type="submit" className="button button-primary">
+              Kirim Pesan
+              <Send className="h-4 w-4" />
+            </button>
+          </div>
+        </motion.form>
       </motion.div>
     </SectionShell>
   );

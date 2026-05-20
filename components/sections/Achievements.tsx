@@ -6,7 +6,6 @@ import { motion } from "framer-motion";
 import { ExternalLink, Trophy } from "lucide-react";
 import { PORTFOLIO_DATA } from "@/constants/portfolio-data";
 import { UI_COPY } from "@/constants/section-content";
-import { Clay3DAsset } from "@/components/ui/Clay3DAsset";
 import { Modal } from "@/components/ui/Modal";
 import { SectionShell } from "@/components/ui/SectionShell";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -15,24 +14,38 @@ import { Achievement } from "@/types/portfolio";
 
 export function Achievements() {
   const [selectedAchievement, setSelectedAchievement] = useState<Achievement | null>(null);
+  const stats = [
+    { label: "Karya dan studi kasus", value: PORTFOLIO_DATA.projects.length },
+    { label: "Pengalaman profesional", value: PORTFOLIO_DATA.experiences.length },
+    { label: "Catatan pencapaian", value: PORTFOLIO_DATA.achievements.length },
+    { label: "Kredensial terverifikasi", value: PORTFOLIO_DATA.certifications.length },
+  ];
 
   return (
-    <SectionShell
-      id="achievements"
-      asset={
-        <Clay3DAsset
-          variant="badge"
-          delay="short"
-          className="bottom-[8%] left-4 hidden h-32 w-32 opacity-75 xl:block 2xl:left-[calc((100vw_-_80rem)/2_-_2rem)]"
-        />
-      }
-    >
+    <SectionShell id="achievements" className="white-section">
       <motion.div
         initial="initial"
         whileInView="animate"
         viewport={{ once: true, margin: "-80px" }}
         variants={staggerContainer}
       >
+        <div className="proof-quote">
+          <p>Catatan teknis</p>
+          <blockquote>
+            &quot;Sistem yang baik harus mudah dilacak, kontrak API-nya jelas, dan antarmukanya tidak
+            membebani pengguna.&quot;
+          </blockquote>
+        </div>
+
+        <div className="stats-grid">
+          {stats.map((stat) => (
+            <div key={stat.label}>
+              <strong>{String(stat.value).padStart(2, "0")}</strong>
+              <span>{stat.label}</span>
+            </div>
+          ))}
+        </div>
+
         <SectionHeading section="achievements" />
 
         <div className="grid gap-4 lg:grid-cols-3">
@@ -42,10 +55,10 @@ export function Achievements() {
               type="button"
               variants={fadeInUp}
               onClick={() => setSelectedAchievement(achievement)}
-              className="clay-card card-hover p-5 text-left"
+              className="editorial-card card-hover p-5 text-left"
             >
               <div className="flex items-start justify-between gap-4">
-                <div className="clay-icon h-12 w-12 shrink-0 rounded-[1.4rem]">
+                <div className="editorial-icon h-12 w-12 shrink-0 rounded-[1.4rem]">
                   <Trophy className="h-5 w-5" />
                 </div>
                 <p className="text-xs font-extrabold tracking-[0.14em] text-[var(--accent)] uppercase dark:text-[var(--accent)]">
@@ -70,7 +83,7 @@ export function Achievements() {
               {achievement.tags && (
                 <div className="mt-4 flex flex-wrap gap-2">
                   {achievement.tags.slice(0, 4).map((tag) => (
-                    <span key={tag} className="clay-chip">
+                    <span key={tag} className="editorial-chip">
                       {tag}
                     </span>
                   ))}
@@ -83,14 +96,14 @@ export function Achievements() {
 
       <Modal isOpen={!!selectedAchievement} onClose={() => setSelectedAchievement(null)} size="lg">
         {selectedAchievement && (
-          <div className="p-6 md:p-8">
-            <div className="flex items-start gap-4">
-              <div className="clay-icon h-14 w-14 shrink-0">
+          <div className="achievement-modal-content p-6 md:p-8">
+            <div className="achievement-modal-header flex items-start gap-4">
+              <div className="editorial-icon h-14 w-14 shrink-0">
                 <Trophy className="h-6 w-6" />
               </div>
-              <div className="flex-1">
+              <div className="min-w-0 flex-1">
                 <p className="section-kicker">Detail Pencapaian</p>
-                <h2 className="display-font mt-3 text-4xl font-extrabold text-[var(--foreground)] dark:text-[var(--foreground)]">
+                <h2 className="achievement-modal-title display-font mt-3 text-4xl font-extrabold text-[var(--foreground)] dark:text-[var(--foreground)]">
                   {selectedAchievement.title}
                 </h2>
                 <p className="mt-2 text-lg font-bold text-[var(--accent)] dark:text-[var(--accent)]">
@@ -113,11 +126,11 @@ export function Achievements() {
               </div>
 
               {selectedAchievement.tags && (
-                <div className="clay-inset p-5">
+                <div className="editorial-inset p-5">
                   <p className="section-kicker">Bukti Teknis</p>
                   <div className="mt-4 flex flex-wrap gap-2">
                     {selectedAchievement.tags.map((tag) => (
-                      <span key={tag} className="clay-chip">
+                      <span key={tag} className="editorial-chip">
                         {tag}
                       </span>
                     ))}
@@ -131,7 +144,10 @@ export function Achievements() {
                 <p className="section-kicker">Dokumentasi</p>
                 <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
                   {selectedAchievement.images.map((image, index) => (
-                    <div key={image} className="clay-inset relative aspect-video overflow-hidden">
+                    <div
+                      key={image}
+                      className="editorial-inset relative aspect-video overflow-hidden"
+                    >
                       <Image
                         src={image}
                         alt={`${selectedAchievement.title} ${index + 1}`}
@@ -150,7 +166,7 @@ export function Achievements() {
                   href={selectedAchievement.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="clay-button clay-button-primary"
+                  className="editorial-button editorial-button-primary"
                 >
                   <ExternalLink className="h-4 w-4" />
                   {UI_COPY.certificateCta}

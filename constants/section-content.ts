@@ -16,30 +16,30 @@ export const NAV_ITEMS = [
 export const SECTION_CONTENT = {
   about: {
     index: "01",
-    title: "Profil",
-    eyebrow: "Tentang",
+    title: "Layanan Teknis",
+    eyebrow: "Profil",
     description:
-      "Ringkasan fokus engineering, cara kerja, dan area fullstack yang paling sering saya tangani.",
+      "Ringkasan fokus teknis, cara kerja, dan area fullstack yang paling relevan untuk dinilai.",
   },
   experience: {
     index: "02",
     title: "Pengalaman",
     eyebrow: "Riwayat Kerja",
     description:
-      "Pengalaman profesional yang berfokus pada backend, API, database, deployment, dan pembelajaran teknis.",
+      "Pengalaman profesional yang berfokus pada backend, API, database, deployment, dan pendampingan teknis.",
   },
   projects: {
     index: "03",
-    title: "Karya Terpilih",
-    eyebrow: "Studi Kasus",
+    title: "Studi Kasus",
+    eyebrow: "Karya Terpilih",
     description:
-      "Proyek yang menunjukkan kemampuan merancang backend, alur data, dan interface web yang bisa dirawat.",
+      "Bukti kerja yang menunjukkan kemampuan merancang backend, alur data, dan antarmuka web yang bisa dirawat.",
   },
   education: {
     index: "04",
     title: "Pendidikan",
     eyebrow: "Latar Akademik",
-    description: "Fondasi akademik dan vokasi yang mendukung kemampuan software engineering saya.",
+    description: "Fondasi akademik dan vokasi yang mendukung kemampuan rekayasa perangkat lunak saya.",
   },
   achievements: {
     index: "05",
@@ -57,9 +57,10 @@ export const SECTION_CONTENT = {
   },
   contact: {
     index: "07",
-    title: "Kontak",
-    eyebrow: "Kolaborasi",
-    description: "Terbuka untuk peluang fullstack/backend, kolaborasi produk, dan diskusi teknis.",
+    title: "Mari Berdiskusi",
+    eyebrow: "Kontak",
+    description:
+      "Hubungi saya untuk peluang fullstack/backend, kolaborasi produk, dan diskusi teknis.",
   },
 } as const;
 
@@ -69,12 +70,12 @@ export const UI_COPY = {
   backToTop: "Kembali ke Atas",
   certificateCta: "Lihat Sertifikat",
   credentialCta: "Buka Kredensial",
-  codeCta: "Buka Repository",
+  codeCta: "Buka Repositori",
   liveCta: "Buka Tautan Publik",
   noPublicLink:
     "Link publik tidak ditampilkan karena karya ini berbasis kompetisi, riset, atau pekerjaan internal.",
   footer:
-    "Portfolio ini dirancang agar recruiter dan tim teknis bisa cepat memahami fokus, bukti kerja, dan cara menghubungi saya.",
+    "Portofolio ini dirancang agar perekrut dan tim teknis cepat memahami fokus, bukti kerja, dan cara menghubungi saya.",
 } as const;
 
 export type SectionKey = keyof typeof SECTION_CONTENT;

@@ -30,7 +30,7 @@ export function Carousel({ images, alt }: CarouselProps) {
 
   if (images.length === 0) {
     return (
-      <div className="clay-inset flex h-80 items-center justify-center">
+      <div className="editorial-inset flex h-80 items-center justify-center">
         <p className="text-sm text-[var(--muted)]">Tidak ada visual yang tercatat.</p>
       </div>
     );
@@ -38,7 +38,7 @@ export function Carousel({ images, alt }: CarouselProps) {
 
   return (
     <div className="relative">
-      <div className="clay-inset relative h-[18rem] overflow-hidden md:h-[28rem]">
+      <div className="editorial-inset relative h-[18rem] overflow-hidden md:h-[28rem]">
         <AnimatePresence initial={false} custom={direction}>
           <motion.div
             key={currentIndex}
@@ -74,7 +74,7 @@ export function Carousel({ images, alt }: CarouselProps) {
 
         <div className="absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-transparent dark:from-slate-950/55" />
 
-        <div className="clay-chip absolute bottom-4 left-4 bg-[var(--surface)]/90 text-[var(--foreground)] backdrop-blur-sm dark:bg-[var(--surface)]/90">
+        <div className="editorial-chip absolute bottom-4 left-4 bg-[var(--surface)]/90 text-[var(--foreground)] backdrop-blur-sm dark:bg-[var(--surface)]/90">
           Visual {currentIndex + 1} / {images.length}
         </div>
 
@@ -83,7 +83,7 @@ export function Carousel({ images, alt }: CarouselProps) {
             <button
               type="button"
               onClick={goToPrevious}
-              className="clay-icon absolute top-1/2 left-4 h-11 w-11 -translate-y-1/2 text-[var(--foreground)] backdrop-blur-sm dark:text-[var(--foreground)]"
+              className="editorial-icon absolute top-1/2 left-4 h-11 w-11 -translate-y-1/2 text-[var(--foreground)] backdrop-blur-sm dark:text-[var(--foreground)]"
               aria-label="Gambar sebelumnya"
             >
               <ChevronLeft className="h-5 w-5" />
@@ -91,7 +91,7 @@ export function Carousel({ images, alt }: CarouselProps) {
             <button
               type="button"
               onClick={goToNext}
-              className="clay-icon absolute top-1/2 right-4 h-11 w-11 -translate-y-1/2 text-[var(--foreground)] backdrop-blur-sm dark:text-[var(--foreground)]"
+              className="editorial-icon absolute top-1/2 right-4 h-11 w-11 -translate-y-1/2 text-[var(--foreground)] backdrop-blur-sm dark:text-[var(--foreground)]"
               aria-label="Gambar berikutnya"
             >
               <ChevronRight className="h-5 w-5" />
