@@ -58,17 +58,14 @@ jobs:
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
 
         steps:
-            - name: Setup SSH Key
-              run: |
-                  mkdir -p ~/.ssh
-                  echo "${{ secrets.VPS_KEY }}" > ~/.ssh/id_rsa
-                  chmod 600 ~/.ssh/id_rsa
-                  ssh-keyscan -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
-
             - name: Deploy via SSH
-              run: |
-                  ssh ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
-                    cd /opt/docker-stack/applications/personal-portofolio
-                    chmod +x ./update.sh
-                    ./update.sh
-                  EOF
+              uses: appleboy/ssh-action@v1
+              with:
+                  host: ${{ secrets.VPS_HOST }}
+                  username: ${{ secrets.VPS_USER }}
+                  key: ${{ secrets.VPS_KEY }}
+                  port: ${{ secrets.VPS_SSH_PORT }}
+                  script: |
+                      cd /opt/docker-stack/applications/personal-portofolio
+                      chmod +x ./update.sh
+                      ./update.sh
